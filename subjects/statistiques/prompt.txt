@@ -1,1 +1,263 @@
+# 📊 STATISTIQUES - Prompt Spécialisé
 
+## 📖 DOCUMENTS DE RÉFÉRENCE
+- **Régression linéaire simple :** `Chapitre 3 - RLS-Cmo.pdf`
+- **Régression linéaire multiple :** `Chapitre 4 _RLM-Cmo.pdf`
+- **Statistiques inférentielles :** `SDD- stat inf- 2025.pdf`
+
+---
+
+## 🎯 MÉTHODOLOGIE DÉTAILLÉE
+
+### **1. RÉGRESSION LINÉAIRE SIMPLE : Y = β₀ + β₁X + ε**
+
+#### **ÉTAPE 1 : TABLEAU DES DONNÉES**
+
+**🔴 TABLEAU OBLIGATOIRE :**
+
+```markdown
+| i | xi | yi | xi-x̄ | yi-ȳ | (xi-x̄)(yi-ȳ) | (xi-x̄)² | (yi-ȳ)² |
+|---|----|----|------|------|---------------|---------|---------|
+| 1 | ... | ... | ... | ... | ... | ... | ... |
+| 2 | ... | ... | ... | ... | ... | ... | ... |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+| **Σ** | **Σxi** | **Σyi** | **0** | **0** | **Σ(xi-x̄)(yi-ȳ)** | **Σ(xi-x̄)²** | **Σ(yi-ȳ)²** |
+```
+
+**Calculs préliminaires DÉTAILLÉS :**
+
+```
+Exemple pour i=1 :
+x₁ = ... , y₁ = ...
+x̄ = Σxi/n = (...+...+...)/n = .../n = ...
+ȳ = Σyi/n = (...+...+...)/n = .../n = ...
+
+x₁-x̄ = ... - ... = ...
+y₁-ȳ = ... - ... = ...
+(x₁-x̄)(y₁-ȳ) = ... × ... = ...
+(x₁-x̄)² = (...)² = ...
+(y₁-ȳ)² = (...)² = ...
+```
+
+---
+
+#### **ÉTAPE 2 : ESTIMATION DES PARAMÈTRES**
+
+**a) Calcul de β₁ :**
+```
+β₁ = Σ(xi-x̄)(yi-ȳ) / Σ(xi-x̄)²
+β₁ = ... / ... = ...
+```
+
+**Interprétation :** "Quand X augmente de 1 unité, Y augmente en moyenne de β₁ = ... unités"
+
+**b) Calcul de β₀ :**
+```
+β₀ = ȳ - β₁×x̄
+β₀ = ... - ...×... = ...
+```
+
+**Interprétation :** "Quand X = 0, Y vaut en moyenne β₀ = ..."
+
+**c) Équation de régression :**
+```
+ŷ = β₀ + β₁×x = ... + ...×x
+```
+
+---
+
+#### **ÉTAPE 3 : QUALITÉ DE L'AJUSTEMENT (R²)**
+
+**a) Sommes des carrés :**
+```
+SCT (totale) = Σ(yi-ȳ)² = ... (du tableau)
+SCE (expliquée) = β₁² × Σ(xi-x̄)² = (...)² × ... = ...
+SCR (résiduelle) = SCT - SCE = ... - ... = ...
+```
+
+**b) Coefficient de détermination :**
+```
+R² = SCE/SCT = .../... = ... = ...%
+```
+
+**✅ INTERPRÉTATION :** "Le modèle explique ...% de la variance de Y"
+
+**c) Variance résiduelle :**
+```
+s² = SCR/(n-2) = .../... = ...
+s = √s² = √... = ...
+```
+
+---
+
+#### **ÉTAPE 4 : TEST DE SIGNIFICATION DE β₁**
+
+**H₀ : β₁ = 0 vs H₁ : β₁ ≠ 0**
+
+**🔴 TABLEAU OBLIGATOIRE :**
+
+```markdown
+| Élément | Valeur | Calcul détaillé |
+|---------|--------|-----------------|
+| β₁ estimé | ... | Σ(xi-x̄)(yi-ȳ)/Σ(xi-x̄)² |
+| s | ... | √[SCR/(n-2)] |
+| Erreur std de β₁ | ... | s/√Σ(xi-x̄)² = .../√... |
+| t observé | ... | β₁/(s/√Σ(xi-x̄)²) = ... |
+| ddl | n-2 = ... | |
+| t critique | ... | Table Student (α=0.05, n-2 ddl) |
+| p-value | ... | P(|T| > |t_obs|) |
+| **Décision** | ... | Si |t_obs| > t_crit → Rejet H₀ |
+```
+
+**✅ CONCLUSION :** "Au seuil α=5%, on [rejette/ne rejette pas] H₀. β₁ est [significatif/non significatif]"
+
+---
+
+#### **ÉTAPE 5 : INTERVALLE DE CONFIANCE À 95% POUR β₁**
+
+```
+IC₉₅%(β₁) = β₁ ± t_{0.025, n-2} × (s/√Σ(xi-x̄)²)
+IC₉₅%(β₁) = ... ± ... × ...
+IC₉₅%(β₁) = [... ; ...]
+```
+
+**✅ INTERPRÉTATION :** "Avec 95% de confiance, β₁ ∈ [... ; ...]"
+
+---
+
+### **2. RÉGRESSION LINÉAIRE MULTIPLE : Y = β₀ + β₁X₁ + β₂X₂ + ... + ε**
+
+#### **NOTATION MATRICIELLE OBLIGATOIRE**
+
+**Matrices de données :**
+```
+     [1  x₁₁  x₁₂  ...  x₁p]       [y₁]
+X =  [1  x₂₁  x₂₂  ...  x₂p]   Y = [y₂]
+     [⋮   ⋮    ⋮         ⋮ ]       [⋮]
+     [1  xn₁  xn₂  ...  xnp]       [yn]
+```
+
+**a) Calcul de X'X :**
+```
+X'X = [n      Σx₁i    Σx₂i   ...]
+      [Σx₁i   Σx₁i²   Σx₁ix₂i ...]
+      [Σx₂i   Σx₁ix₂i Σx₂i²   ...]
+      
+Montrer CHAQUE multiplication :
+X'X[1,1] = 1×1 + 1×1 + ... = n
+X'X[1,2] = 1×x₁₁ + 1×x₂₁ + ... = Σx₁i
+...
+```
+
+**b) Calcul de (X'X)⁻¹ :**
+```
+Méthode : déterminant + comatrice
+det(X'X) = ...
+Cofacteurs : ...
+(X'X)⁻¹ = ...
+```
+
+**c) Calcul de X'Y :**
+```
+X'Y = [Σyi]
+      [Σx₁iyi]
+      [Σx₂iyi]
+      [...]
+```
+
+**d) Estimation β̂ :**
+```
+β̂ = (X'X)⁻¹X'Y = [...] × [...] = [β₀]
+                                   [β₁]
+                                   [β₂]
+```
+
+---
+
+#### **TEST F GLOBAL**
+
+**H₀ : β₁ = β₂ = ... = βp = 0**
+
+**🔴 TABLEAU ANOVA OBLIGATOIRE :**
+
+```markdown
+| Source | SC | ddl | CM | F | F_critique | Décision |
+|--------|----|----|-----|---|------------|----------|
+| Régression | SCE = ... | p | CME = SCE/p = ... | F = CME/CMR = ... | ... | ... |
+| Résiduelle | SCR = ... | n-p-1 | CMR = SCR/(n-p-1) = ... | | | |
+| **Totale** | **SCT = ...** | **n-1** | | | | |
+```
+
+**Calculs détaillés :**
+```
+SCE = Σ(ŷi-ȳ)² = ...
+SCR = Σ(yi-ŷi)² = ...
+SCT = Σ(yi-ȳ)² = ...
+Vérification : SCT = SCE + SCR ✓
+
+F = [SCE/p] / [SCR/(n-p-1)] = ... / ... = ...
+F_critique = F(α=0.05, p, n-p-1) = ... (table)
+```
+
+**✅ CONCLUSION :** "Si F > F_critique → au moins un βj ≠ 0"
+
+---
+
+### **3. TESTS D'HYPOTHÈSES**
+
+#### **A) TEST SUR UNE MOYENNE (Student)**
+
+**H₀ : μ = μ₀**
+
+**🔴 TABLEAU OBLIGATOIRE :**
+
+```markdown
+| Étape | Calcul | Valeur |
+|-------|--------|--------|
+| Moyenne échantillon | x̄ = Σxi/n | ... |
+| Écart-type | s = √[Σ(xi-x̄)²/(n-1)] | ... |
+| Erreur standard | SE = s/√n | ... |
+| t observé | t = (x̄-μ₀)/SE | ... |
+| ddl | n-1 | ... |
+| t critique | Table Student (α, n-1) | ... |
+| **Décision** | |t| > t_crit ? | Rejet/Acceptation |
+```
+
+---
+
+#### **B) TEST DU CHI² (Ajustement/Indépendance)**
+
+**🔴 TABLEAU OBLIGATOIRE :**
+
+```markdown
+| Modalité | Observé Oi | Théorique Ei | (Oi-Ei)² | (Oi-Ei)²/Ei |
+|----------|------------|--------------|----------|-------------|
+| 1 | ... | ... | ... | ... |
+| 2 | ... | ... | ... | ... |
+| **Total** | **Σ Oi = n** | **Σ Ei = n** | - | **χ² = Σ(Oi-Ei)²/Ei = ...** |
+```
+
+**Calculs détaillés pour chaque ligne :**
+```
+Ligne 1 : 
+Ei = n×pi = ...×... = ...
+(Oi-Ei)² = (...-...)² = ...
+(Oi-Ei)²/Ei = .../... = ...
+```
+
+**Décision :**
+```
+ddl = k - 1 - nombre de paramètres estimés = ...
+χ²_critique (α=0.05, ddl) = ... (table)
+Si χ²_obs > χ²_crit → Rejet H₀
+```
+
+---
+
+## 💡 ERREURS FRÉQUENTES À ÉVITER
+
+❌ Oublier le tableau de calculs préliminaires
+❌ Ne pas interpréter R²
+❌ Confondre SCE et SCR
+❌ Oublier les ddl dans les tests
+❌ Ne pas vérifier SCT = SCE + SCR
