@@ -1,164 +1,163 @@
-# 🌡️ TRANSFERTS THERMIQUES - Prompt Spécialisé
+# TRANSFERTS THERMIQUES - Prompt Spécialisé
 
-## 📖 DOCUMENTS DE RÉFÉRENCE
-- **Conduction thermique :** `Support n°1.pdf`
-- **Convection thermique :** `Support n°2.pdf`
+RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (φ, λ, Nu, Re, etc.)
+
+## DOCUMENTS DE RÉFÉRENCE
+- Conduction thermique : Support n°1.pdf
+- Convection thermique : Support n°2.pdf
 
 ---
 
-## 🎯 MÉTHODOLOGIE DÉTAILLÉE
+## MÉTHODOLOGIE DÉTAILLÉE
 
-### **1. CONDUCTION THERMIQUE**
+### 1. CONDUCTION THERMIQUE
 
-#### **LOI DE FOURIER : φ⃗ = -λ∇⃗T**
+#### LOI DE FOURIER : φ = -λ ∇T
 
-**Mur plan (régime permanent, 1D) :**
+Mur plan (régime permanent, 1D) :
 
-**Données OBLIGATOIRES à lister :**
+Données OBLIGATOIRES à lister :
 ```
 - Épaisseur : e = ... m
 - Conductivité : λ = ... W/(m·K)
 - Surface : S = ... m²
-- Températures : T₁ = ... °C/K, T₂ = ... °C/K
+- Températures : T1 = ... °C/K, T2 = ... °C/K
 ```
 
-**ÉTAPE 1 : Profil de température**
+ÉTAPE 1 : Profil de température
 ```
 Équation de la chaleur : d²T/dx² = 0
 Solution générale : T(x) = Ax + B
 
 Conditions aux limites :
-• T(0) = T₁ ⇒ B = T₁
-• T(e) = T₂ ⇒ A×e + T₁ = T₂ 
-           ⇒ A = (T₂-T₁)/e
+• T(0) = T1 ⇒ B = T1
+• T(e) = T2 ⇒ A×e + T1 = T2 
+           ⇒ A = (T2-T1)/e
 
-✅ Profil linéaire : T(x) = T₁ + (T₂-T₁)×(x/e)
+✓ Profil linéaire : T(x) = T1 + (T2-T1)×(x/e)
 ```
 
-**ÉTAPE 2 : Flux thermique**
+ÉTAPE 2 : Flux thermique
 ```
 ϕ = -λS × dT/dx
-dT/dx = d/dx[T₁ + (T₂-T₁)×(x/e)] = (T₂-T₁)/e
-ϕ = -λS × (T₂-T₁)/e
-ϕ = λS × (T₁-T₂)/e
+dT/dx = d/dx[T1 + (T2-T1)×(x/e)] = (T2-T1)/e
+ϕ = -λS × (T2-T1)/e
+ϕ = λS × (T1-T2)/e
 
 Calcul numérique :
 ϕ = ... × ... × (...-...)/...
 ϕ = ... W
 ```
 
-**ÉTAPE 3 : Résistance thermique**
+ÉTAPE 3 : Résistance thermique
 ```
 R_th = e/(λS)
 R_th = .../(...×...)
 R_th = ... K/W
 
-✅ Vérification : ϕ = (T₁-T₂)/R_th = (...-...)/... = ... W ✓
+✓ Vérification : ϕ = (T1-T2)/R_th = (...-...)/... = ... W ✓
 ```
 
 ---
 
-#### **MUR COMPOSITE (n couches en série)**
+#### MUR COMPOSITE (n couches en série)
 
-**🔴 TABLEAU OBLIGATOIRE DES RÉSISTANCES :**
+TABLEAU OBLIGATOIRE DES RÉSISTANCES :
 
-```markdown
 | Couche | Épaisseur ei (m) | λi (W/m·K) | S (m²) | R_th,i = ei/(λi×S) (K/W) |
 |--------|------------------|------------|--------|--------------------------|
-| 1 | e₁ = ... | λ₁ = ... | S = ... | R₁ = .../(...×...) = ... |
-| 2 | e₂ = ... | λ₂ = ... | S = ... | R₂ = .../(...×...) = ... |
-| 3 | e₃ = ... | λ₃ = ... | S = ... | R₃ = .../(...×...) = ... |
-| **Total** | - | - | - | **R_total = R₁+R₂+R₃ = ...+...+... = ...** |
-```
+| 1 | e1 = ... | λ1 = ... | S = ... | R1 = .../(...×...) = ... |
+| 2 | e2 = ... | λ2 = ... | S = ... | R2 = .../(...×...) = ... |
+| 3 | e3 = ... | λ3 = ... | S = ... | R3 = .../(...×...) = ... |
+| Total | - | - | - | R_total = R1+R2+R3 = ...+...+... = ... |
 
-**Flux global :**
+Flux global :
 ```
-ϕ = (T₁ - T_n+1) / R_total
+ϕ = (T1 - T_n+1) / R_total
 ϕ = (...-...) / ...
 ϕ = ... W
 ```
 
-**Températures d'interface :**
+Températures d'interface :
 ```
-T₂ = T₁ - ϕ×R₁ = ... - ...×... = ... °C/K
-T₃ = T₂ - ϕ×R₂ = ... - ...×... = ... °C/K
-T₄ = T₃ - ϕ×R₃ = ... - ...×... = ... °C/K
+T2 = T1 - ϕ×R1 = ... - ...×... = ... °C/K
+T3 = T2 - ϕ×R2 = ... - ...×... = ... °C/K
+T4 = T3 - ϕ×R3 = ... - ...×... = ... °C/K
 
-✅ Vérification : T₄ doit être égal à T_n+1 ✓
+✓ Vérification : T4 doit être égal à T_n+1 ✓
 ```
 
 ---
 
-#### **CYLINDRE CREUX (r₁ < r < r₂, longueur L)**
+#### CYLINDRE CREUX (r1 < r < r2, longueur L)
 
-**Données :**
+Données :
 ```
-- Rayon intérieur : r₁ = ... m
-- Rayon extérieur : r₂ = ... m
+- Rayon intérieur : r1 = ... m
+- Rayon extérieur : r2 = ... m
 - Longueur : L = ... m
 - Conductivité : λ = ... W/(m·K)
-- Températures : T₁ = ... °C/K, T₂ = ... °C/K
+- Températures : T1 = ... °C/K, T2 = ... °C/K
 ```
 
-**Profil de température (logarithmique) :**
+Profil de température (logarithmique) :
 ```
 T(r) = A ln(r) + B
 
 Conditions aux limites :
-T(r₁) = T₁ ⇒ A ln(r₁) + B = T₁
-T(r₂) = T₂ ⇒ A ln(r₂) + B = T₂
+T(r1) = T1 ⇒ A ln(r1) + B = T1
+T(r2) = T2 ⇒ A ln(r2) + B = T2
 
 Résolution :
-A = (T₂-T₁)/[ln(r₂/r₁)]
-B = T₁ - A ln(r₁)
+A = (T2-T1)/[ln(r2/r1)]
+B = T1 - A ln(r1)
 
-✅ T(r) = T₁ + [(T₂-T₁)/ln(r₂/r₁)] × ln(r/r₁)
+✓ T(r) = T1 + [(T2-T1)/ln(r2/r1)] × ln(r/r1)
 ```
 
-**Flux thermique :**
+Flux thermique :
 ```
-ϕ = 2πλL(T₁-T₂)/ln(r₂/r₁)
+ϕ = 2πλL(T1-T2)/ln(r2/r1)
 ϕ = 2π×...×...×(...-...)/ln(.../...)
 ϕ = ... W
 ```
 
-**Résistance :**
+Résistance :
 ```
-R_th = ln(r₂/r₁)/(2πλL)
+R_th = ln(r2/r1)/(2πλL)
 R_th = ln(.../...)/(2π×...×...)
 R_th = ... K/W
 ```
 
 ---
 
-### **2. CONVECTION THERMIQUE**
+### 2. CONVECTION THERMIQUE
 
-#### **LOI DE NEWTON : φ = h(T_s - T_∞)**
+#### LOI DE NEWTON : φ = h(T_s - T_∞)
 
-**DÉMARCHE SYSTÉMATIQUE COMPLÈTE**
-
----
-
-#### **ÉTAPE 1 : IDENTIFIER LE TYPE**
-
-```
-□ Convection FORCÉE (pompe, ventilateur) ou NATURELLE (flottabilité) ?
-□ Géométrie : Plaque plane / Cylindre / Sphère / Tube ?
-□ Orientation (si plaque horizontale) : Chaude vers haut/bas ?
-```
+DÉMARCHE SYSTÉMATIQUE COMPLÈTE
 
 ---
 
-#### **ÉTAPE 2 : PROPRIÉTÉS DU FLUIDE**
+#### ÉTAPE 1 : IDENTIFIER LE TYPE
 
-**Température de film :**
+```
+☐ Convection FORCÉE (pompe, ventilateur) ou NATURELLE (flottabilité) ?
+☐ Géométrie : Plaque plane / Cylindre / Sphère / Tube ?
+☐ Orientation (si plaque horizontale) : Chaude vers haut/bas ?
+```
+
+---
+
+#### ÉTAPE 2 : PROPRIÉTÉS DU FLUIDE
+
+Température de film :
 ```
 T_film = (T_s + T_∞)/2 = (...+...)/2 = ... K ou °C
 ```
 
-**🔴 TABLEAU OBLIGATOIRE (à chercher dans tables du cours) :**
+TABLEAU OBLIGATOIRE (à chercher dans tables du cours) :
 
-```markdown
 | Propriété | Symbole | Valeur | Unité | Source |
 |-----------|---------|--------|-------|--------|
 | Température de film | T_film | ... | K | Calcul |
@@ -167,17 +166,16 @@ T_film = (T_s + T_∞)/2 = (...+...)/2 = ... K ou °C
 | Viscosité cinématique | ν | μ/ρ = .../... | m²/s | Calcul |
 | Conductivité thermique | λ | ... | W/(m·K) | Table à T_film |
 | Capacité calorifique | cp | ... | J/(kg·K) | Table à T_film |
-| **Nombre de Prandtl** | **Pr** | **μcp/λ = ...×.../...** | **-** | **Calcul** |
+| Nombre de Prandtl | Pr | μcp/λ = ...×.../... | - | Calcul |
 | Coeff. dilatation (gaz) | β | 1/T_film = 1/... | K⁻¹ | Calcul (si gaz) |
-```
 
 ---
 
-#### **ÉTAPE 3 : CALCUL DES NOMBRES SANS DIMENSION**
+#### ÉTAPE 3 : CALCUL DES NOMBRES SANS DIMENSION
 
-### **A) CONVECTION FORCÉE**
+### A) CONVECTION FORCÉE
 
-**1. Nombre de Reynolds :**
+1. Nombre de Reynolds :
 ```
 Re = ρ×u_∞×L / μ = u_∞×L / ν
 
@@ -186,32 +184,30 @@ Re = ...×...×... / ...
   = ...×... / ...
   = ...
 
-✅ Régime : [LAMINAIRE si Re < Seuil] ou [TURBULENT si Re > Seuil]
+✓ Régime : [LAMINAIRE si Re < Seuil] ou [TURBULENT si Re > Seuil]
 ```
 
-**Seuils de transition :**
+Seuils de transition :
 ```
 Plaque plane : Re_c = 5×10⁵
 Tube : Re_c = 2100 (lam), 10000 (turb)
 ```
 
-**2. Choix de la corrélation Nu = f(Re, Pr)**
+2. Choix de la corrélation Nu = f(Re, Pr)
 
-**🔴 TABLEAU DES CORRÉLATIONS - CONVECTION FORCÉE :**
+TABLEAU DES CORRÉLATIONS - CONVECTION FORCÉE :
 
-```markdown
 | Géométrie | Régime | Corrélation | Domaine de validité |
 |-----------|--------|-------------|---------------------|
-| **Plaque plane** | Laminaire | Nu = 0.664×Re^(1/2)×Pr^(1/3) | Re < 5×10⁵, Pr > 0.6 |
-| | Turbulent | Nu = 0.037×Re^(4/5)×Pr^(1/3) | 5×10⁵ < Re < 10⁸ |
-| **Tube** | Laminaire, φ imposé | Nu = 4.36 | Re < 2100 |
-| | Laminaire, Ts imposé | Nu = 3.66 | Re < 2100 |
-| | Turbulent (Dittus-Boelter) | Nu = 0.023×Re^(4/5)×Pr^n | Re>10000, n=0.4 chauffe, n=0.3 refroid |
-| **Cylindre** (perpendiculaire) | Tous (Churchill-Bernstein) | Nu = 0.3+[0.62Re^(1/2)Pr^(1/3)/[1+(0.4/Pr)^(2/3)]^(1/4)]×[1+(Re/282000)^(5/8)]^(4/5) | Re×Pr>0.2 |
-| **Sphère** (Whitaker) | Tous | Nu = 2+(0.4Re^(1/2)+0.06Re^(2/3))×Pr^(0.4)×(μ/μs)^(1/4) | 3.5<Re<8×10⁴ |
-```
+| Plaque plane | Laminaire | Nu = 0.664×Re^(1/2)×Pr^(1/3) | Re < 5×10⁵, Pr > 0.6 |
+| Plaque plane | Turbulent | Nu = 0.037×Re^(4/5)×Pr^(1/3) | 5×10⁵ < Re < 10⁸ |
+| Tube | Lam, φ imposé | Nu = 4.36 | Re < 2100 |
+| Tube | Lam, Ts imposé | Nu = 3.66 | Re < 2100 |
+| Tube | Turbulent | Nu = 0.023×Re^(4/5)×Pr^n | Re>10000, n=0.4 chauffe, n=0.3 refroid |
+| Cylindre | Tous | Nu = 0.3+[0.62Re^(1/2)Pr^(1/3)/[1+(0.4/Pr)^(2/3)]^(1/4)]×[1+(Re/282000)^(5/8)]^(4/5) | Re×Pr>0.2 |
+| Sphère | Tous | Nu = 2+(0.4Re^(1/2)+0.06Re^(2/3))×Pr^(0.4)×(μ/μs)^(1/4) | 3.5<Re<8×10⁴ |
 
-**3. Calcul de Nu :**
+3. Calcul de Nu :
 ```
 Corrélation choisie : ...
 Nu = 0.664 × (...) ^(1/2) × (...) ^(1/3)
@@ -221,9 +217,9 @@ Nu = ...
 
 ---
 
-### **B) CONVECTION NATURELLE**
+### B) CONVECTION NATURELLE
 
-**1. Nombre de Grashof :**
+1. Nombre de Grashof :
 ```
 Gr = g × β × (T_s - T_∞) × L³ / ν²
 
@@ -233,33 +229,31 @@ Gr = ... × ... × ... × ... / ...
 Gr = ...
 ```
 
-**2. Nombre de Rayleigh :**
+2. Nombre de Rayleigh :
 ```
 Ra = Gr × Pr
 Ra = ... × ...
 Ra = ...
 
-✅ Régime : [LAMINAIRE si Ra < 10⁹] ou [TURBULENT si Ra > 10⁹]
+✓ Régime : [LAMINAIRE si Ra < 10⁹] ou [TURBULENT si Ra > 10⁹]
 ```
 
-**3. Choix de la corrélation Nu = f(Ra, Pr)**
+3. Choix de la corrélation Nu = f(Ra, Pr)
 
-**🔴 TABLEAU DES CORRÉLATIONS - CONVECTION NATURELLE :**
+TABLEAU DES CORRÉLATIONS - CONVECTION NATURELLE :
 
-```markdown
 | Géométrie | Orientation | Régime | Corrélation | Domaine |
 |-----------|-------------|--------|-------------|---------|
-| **Plaque verticale** | - | Laminaire | Nu = 0.59×Ra^(1/4) | 10⁴<Ra<10⁹ |
-| | - | Turbulent | Nu = 0.10×Ra^(1/3) | 10⁹<Ra<10¹³ |
-| | - | Tous (Churchill-Chu) | Nu = [0.825+0.387Ra^(1/6)/[1+(0.492/Pr)^(9/16)]^(8/27)]² | Tous Ra |
-| **Plaque horiz.** | Chaude vers haut | Lam | Nu = 0.54×Ra^(1/4) | 10⁴<Ra<10⁷ |
-| | Chaude vers haut | Turb | Nu = 0.15×Ra^(1/3) | 10⁷<Ra<10¹¹ |
-| | Chaude vers bas | Lam | Nu = 0.27×Ra^(1/4) | 10⁵<Ra<10¹⁰ |
-| **Cylindre horiz.** | - | Lam | Nu = 0.48×Ra^(0.25) | 10⁴<Ra<10⁷ |
-| **Sphère** | - | Tous | Nu = 2+0.589Ra^(1/4)/[1+(0.469/Pr)^(9/16)]^(4/9) | Ra<10¹¹, Pr>0.7 |
-```
+| Plaque verticale | - | Laminaire | Nu = 0.59×Ra^(1/4) | 10⁴<Ra<10⁹ |
+| Plaque verticale | - | Turbulent | Nu = 0.10×Ra^(1/3) | 10⁹<Ra<10¹³ |
+| Plaque verticale | - | Tous | Nu = [0.825+0.387Ra^(1/6)/[1+(0.492/Pr)^(9/16)]^(8/27)]² | Tous Ra |
+| Plaque horiz | Chaude haut | Lam | Nu = 0.54×Ra^(1/4) | 10⁴<Ra<10⁷ |
+| Plaque horiz | Chaude haut | Turb | Nu = 0.15×Ra^(1/3) | 10⁷<Ra<10¹¹ |
+| Plaque horiz | Chaude bas | Lam | Nu = 0.27×Ra^(1/4) | 10⁵<Ra<10¹⁰ |
+| Cylindre horiz | - | Lam | Nu = 0.48×Ra^(0.25) | 10⁴<Ra<10⁷ |
+| Sphère | - | Tous | Nu = 2+0.589Ra^(1/4)/[1+(0.469/Pr)^(9/16)]^(4/9) | Ra<10¹¹, Pr>0.7 |
 
-**4. Calcul de Nu :**
+4. Calcul de Nu :
 ```
 Corrélation choisie : ...
 Nu = 0.59 × (...)^(1/4)
@@ -269,7 +263,7 @@ Nu = ...
 
 ---
 
-#### **ÉTAPE 4 : CALCUL DU COEFFICIENT h**
+#### ÉTAPE 4 : CALCUL DU COEFFICIENT h
 
 ```
 h = Nu × λ / L
@@ -279,7 +273,7 @@ h = ... W/(m²·K)
 
 ---
 
-#### **ÉTAPE 5 : CALCUL DU FLUX**
+#### ÉTAPE 5 : CALCUL DU FLUX
 
 ```
 φ = h × As × (T_s - T_∞)
@@ -289,7 +283,7 @@ h = ... W/(m²·K)
 
 ---
 
-#### **ÉTAPE 6 : RÉSISTANCE THERMIQUE**
+#### ÉTAPE 6 : RÉSISTANCE THERMIQUE
 
 ```
 R_th,conv = 1/(h×As)
@@ -299,32 +293,30 @@ R_th,conv = ... K/W
 
 ---
 
-### **3. PROBLÈME COUPLÉ (Conduction + Convection)**
+### 3. PROBLÈME COUPLÉ (Conduction + Convection)
 
-**Schéma thermique équivalent :**
+Schéma thermique équivalent :
 ```
 Fluide 1 (T_∞1, h1) → [R_conv1] → Surface (Ts1) → [R_cond] → Surface (Ts2) → [R_conv2] → Fluide 2 (T_∞2, h2)
 ```
 
-**🔴 TABLEAU OBLIGATOIRE DES RÉSISTANCES :**
+TABLEAU OBLIGATOIRE DES RÉSISTANCES :
 
-```markdown
 | Type | Calcul | Valeur (K/W) |
 |------|--------|--------------|
 | R_conv1 | 1/(h1×A) = 1/(...×...) | ... |
 | R_cond | e/(λ×A) = .../(...×...) | ... |
 | R_conv2 | 1/(h2×A) = 1/(...×...) | ... |
-| **R_total** | **Σ R = ...+...+...** | **...** |
-```
+| R_total | Σ R = ...+...+... | ... |
 
-**Flux global :**
+Flux global :
 ```
 ϕ = (T_∞1 - T_∞2) / R_total
 ϕ = (...-...) / ...
 ϕ = ... W
 ```
 
-**Températures de surface :**
+Températures de surface :
 ```
 Ts1 = T_∞1 - ϕ×R_conv1
 Ts1 = ... - ...×...
@@ -334,13 +326,13 @@ Ts2 = Ts1 - ϕ×R_cond
 Ts2 = ... - ...×...
 Ts2 = ... °C/K
 
-✅ Vérification : T_∞2 = Ts2 - ϕ×R_conv2
+✓ Vérification : T_∞2 = Ts2 - ϕ×R_conv2
 T_∞2 = ... - ...×... = ... ✓ (doit correspondre à la donnée)
 ```
 
 ---
 
-## 💡 ERREURS FRÉQUENTES À ÉVITER
+## ERREURS FRÉQUENTES À ÉVITER
 
 ❌ Oublier de calculer T_film
 ❌ Ne pas créer le tableau des propriétés
@@ -349,3 +341,4 @@ T_∞2 = ... - ...×... = ... ✓ (doit correspondre à la donnée)
 ❌ Oublier les unités (K ou °C, W ou kW)
 ❌ Ne pas vérifier les résistances en série
 ❌ Confondre longueur caractéristique L (plaque, diamètre, etc.)
+❌ Utiliser du LaTeX (interdit !)
