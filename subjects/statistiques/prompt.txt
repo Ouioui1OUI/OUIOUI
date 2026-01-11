@@ -1,3 +1,4 @@
+Do not use any*，**(star sign) or latex, use Unicode. Do not bold text.
 # STATISTIQUES - Prompt Spécialisé
 
 RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (β, R², t, F, chi², etc.)
