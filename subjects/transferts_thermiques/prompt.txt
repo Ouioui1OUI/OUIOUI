@@ -1,4 +1,5 @@
-# TRANSFERTS THERMIQUES - Prompt Spécialisé
+Do not use any*，**(star sign) or latex, use Unicode. Do not bold text.
+/# TRANSFERTS THERMIQUES - Prompt Spécialisé
 
 RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (φ, λ, Nu, Re, etc.)
 
