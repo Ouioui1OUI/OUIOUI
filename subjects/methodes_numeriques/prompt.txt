@@ -1,226 +1,224 @@
-# 🔢 MÉTHODES NUMÉRIQUES - Prompt Spécialisé
+# MÉTHODES NUMÉRIQUES - Prompt Spécialisé
 
-## 📖 DOCUMENTS DE RÉFÉRENCE
-- **Cours complet :** `COURS_Méthodes_numériques.pdf`
-- **Correction type :** `Corrigé CC1_2024.pdf`
+RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (β, y'(t), exp(-cos(t)), etc.)
+
+## DOCUMENTS DE RÉFÉRENCE
+- Cours complet : COURS_Méthodes_numériques.pdf
+- Correction type : Corrigé CC1_2024.pdf
 
 ---
 
-## 🎯 MÉTHODOLOGIE DÉTAILLÉE
+## MÉTHODOLOGIE DÉTAILLÉE
 
-### **1. PROBLÈME DE CAUCHY : y'(t) = f(t,y), y(t₀) = y₀**
+### 1. PROBLÈME DE CAUCHY : y'(t) = f(t,y), y(t0) = y0
 
-#### **Q1 : EXISTENCE ET UNICITÉ (Théorème Cauchy-Lipschitz)**
+#### Q1 : EXISTENCE ET UNICITÉ (Théorème Cauchy-Lipschitz)
 
-**Étapes OBLIGATOIRES :**
+Étapes OBLIGATOIRES :
 
-a) **Définir le domaine D**
+a) Définir le domaine D
    - D = {(t,y) : a ≤ t ≤ b, y ∈ ℝ}
    - Vérifier que D est convexe (tube infini → toujours convexe)
 
-b) **Continuité de f**
+b) Continuité de f
    - Décomposer f(t,y) en fonctions élémentaires
-   - Conclure : "f est C^∞ sur ℝ×ℝ, donc continue sur D ✓"
+   - Conclure : "f est C∞ sur ℝ×ℝ, donc continue sur D ✓"
 
-c) **Condition de Lipschitz (via Théorème 1)**
+c) Condition de Lipschitz (via Théorème 1)
    - Calculer ∂f/∂y = ...
    - Montrer |∂f/∂y| ≤ L sur D
-   - Exemple : |∂f/∂y| = |t²cos(t)| ≤ t² ≤ 4 pour t ∈ [0,2]
+   - Exemple : |∂f/∂y| = |t² cos(t)| ≤ t² ≤ 4 pour t ∈ [0,2]
    - Conclure : "f lipschitzienne par rapport à y de constante L = ... ✓"
 
-**✅ CONCLUSION :** "Le problème admet une solution unique y(t) de classe C¹ sur [a,b]"
+CONCLUSION : "Le problème admet une solution unique y(t) de classe C¹ sur [a,b]"
 
 ---
 
-#### **Q2 : SOLUTION EXACTE**
+#### Q2 : SOLUTION EXACTE
 
-**Identifier le type d'EDO :**
+Identifier le type d'EDO :
 - Linéaire : y' + p(t)y = q(t)
 - Séparable : y' = g(t)h(y)
 - Bernoulli : y' + p(t)y = q(t)y^n
 - Exacte
 
-**Pour EDO LINÉAIRE (le plus fréquent) :**
+Pour EDO LINÉAIRE (le plus fréquent) :
 
-**a) Équation homogène**
+a) Équation homogène
 ```
 y' + p(t)y = 0
-→ Solution : y_h(t) = λe^(-∫p(t)dt)
+→ Solution : y_h(t) = λ exp(-∫p(t)dt)
 ```
 
-**b) Facteur intégrant**
+b) Facteur intégrant
 ```
-μ(t) = e^(∫p(t)dt)
+μ(t) = exp(∫p(t)dt)
 Calcul détaillé : ∫p(t)dt = ...
-μ(t) = e^(...) = ...
+μ(t) = exp(...) = ...
 ```
 
-**c) Solution particulière (Variation de la Constante)**
+c) Solution particulière (Variation de la Constante)
 ```
 y_p(t) = [∫μ(t)q(t)dt] / μ(t)
 Calcul détaillé de l'intégrale : ...
 ```
 
-**d) Solution générale**
+d) Solution générale
 ```
-y(t) = y_h(t) + y_p(t) = λe^(...) + ...
+y(t) = y_h(t) + y_p(t) = λ exp(...) + ...
 ```
 
-**e) Application de la condition initiale**
+e) Application de la condition initiale
 ```
-y(t₀) = y₀
+y(t0) = y0
 → Résoudre pour λ : λ = ...
 ```
 
-**f) ✅ VÉRIFICATION OBLIGATOIRE**
+f) VÉRIFICATION OBLIGATOIRE
 ```
 y'(t) = ... (dériver)
 f(t,y(t)) = ... (substituer)
 Vérifier : y'(t) = f(t,y(t)) ✓
-Vérifier : y(t₀) = y₀ ✓
+Vérifier : y(t0) = y0 ✓
 ```
 
 ---
 
-#### **Q3 : PROBLÈME BIEN POSÉ (Stabilité)**
+#### Q3 : PROBLÈME BIEN POSÉ (Stabilité)
 
-**Problème perturbé :**
+Problème perturbé :
 ```
-z'(t) = f(t,z) + δ(t), z(t₀) = y₀ + ε₀
-|δ(t)| < ε, |ε₀| < ε
+z'(t) = f(t,z) + δ(t), z(t0) = y0 + ε0
+|δ(t)| < ε, |ε0| < ε
 ```
 
-**a) Résoudre le problème perturbé** (même méthode que Q2)
+a) Résoudre le problème perturbé (même méthode que Q2)
 
-**b) Majorer |z(t) - y(t)|**
+b) Majorer |z(t) - y(t)|
 ```
 |z(t) - y(t)| = |...| 
-≤ |δ|×... + |ε₀|×... (inégalités triangulaires)
+≤ |δ|×... + |ε0|×... (inégalités triangulaires)
 ≤ K×ε avec K = ... (constante indépendante de ε et t)
 ```
 
-**✅ CONCLUSION :** "Le problème est bien posé : |z-y| ≤ K×ε"
+CONCLUSION : "Le problème est bien posé : |z-y| ≤ K×ε"
 
 ---
 
-### **2. MÉTHODES NUMÉRIQUES**
+### 2. MÉTHODES NUMÉRIQUES
 
-#### **🔴 RÈGLE CRITIQUE : TABLEAUX OBLIGATOIRES**
+#### RÈGLE CRITIQUE : TABLEAUX OBLIGATOIRES
 
-Pour **TOUTE** méthode itérative, tu DOIS créer ce tableau :
+Pour TOUTE méthode itérative, tu DOIS créer ce tableau :
 
-```markdown
-| n | t_n | sin(t_n) | f(t_n,w_n) = ... | w_{n+1} = w_n + ... | y(t_n) (exact) | Erreur |y-w| |
-|---|-----|----------|------------------|---------------------|----------------|---------------|
-| 0 | 0.0 | 0.000    | 2×0 + 0 = 0.000  | 2.0 (CI)            | 2.000          | 0.0000        |
-| 1 | 0.1 | 0.0998   | 2×0.0998+... = ...| 2.0 + 0.1×0 = 2.0   | 2.0300         | 0.0300        |
-```
+| n | t_n | sin(t_n) | f(t_n,w_n) = ... | w_{n+1} = w_n + ... | y(t_n) exact | Erreur |y-w| |
+|---|-----|----------|------------------|---------------------|--------------|---------------|
+| 0 | 0.0 | 0.000    | 2×0 + 0 = 0.000  | 2.0 (CI)            | 2.000        | 0.0000        |
+| 1 | 0.1 | 0.0998   | 2×0.0998+... = ...| 2.0 + 0.1×0 = 2.0   | 2.0300       | 0.0300        |
 
-**⚠️ APRÈS le tableau, détaille 2-3 itérations ligne par ligne :**
+⚠️ APRÈS le tableau, détaille 2-3 itérations ligne par ligne :
 
 ```
 Itération n=0 :
-- Donnée : t₀ = 0, w₀ = 2 (condition initiale)
-- Calcul : sin(t₀) = sin(0) = 0
-- f(t₀,w₀) = 2×sin(0) + sin(0) = 0
-- w₁ = w₀ + h×f(t₀,w₀) = 2 + 0.1×0 = 2.0
+- Donnée : t0 = 0, w0 = 2 (condition initiale)
+- Calcul : sin(t0) = sin(0) = 0
+- f(t0,w0) = 2×sin(0) + sin(0) = 0
+- w1 = w0 + h×f(t0,w0) = 2 + 0.1×0 = 2.0
 
 Itération n=1 :
-- t₁ = t₀ + h = 0 + 0.1 = 0.1
-- sin(t₁) = sin(0.1) = 0.09983 (calculatrice)
-- f(t₁,w₁) = 2×0.09983 + 0.09983 = 0.2995
-- w₂ = w₁ + h×f(t₁,w₁) = 2.0 + 0.1×0.2995 = 2.02995
+- t1 = t0 + h = 0 + 0.1 = 0.1
+- sin(t1) = sin(0.1) = 0.09983 (calculatrice)
+- f(t1,w1) = 2×0.09983 + 0.09983 = 0.2995
+- w2 = w1 + h×f(t1,w1) = 2.0 + 0.1×0.2995 = 2.02995
 ```
 
 ---
 
-#### **A) MÉTHODE D'EULER**
+#### A) MÉTHODE D'EULER
 
-**Formule :**
+Formule :
 ```
-t_n = t₀ + n×h
-w₀ = y₀
+t_n = t0 + n×h
+w0 = y0
 w_{n+1} = w_n + h×f(t_n, w_n)
 ```
 
-**Ordre :** Erreur globale O(h)
+Ordre : Erreur globale O(h)
 
 ---
 
-#### **B) MÉTHODE DE TAYLOR D'ORDRE 2**
+#### B) MÉTHODE DE TAYLOR D'ORDRE 2
 
-**⚠️ Calcul des dérivées partielles OBLIGATOIRE :**
+⚠️ Calcul des dérivées partielles OBLIGATOIRE :
 
 ```
 f_t = ∂f/∂t = ... (montrer le calcul)
 f_y = ∂f/∂y = ... (montrer le calcul)
 ```
 
-**Formule :**
+Formule :
 ```
 w_{n+1} = w_n + h×f(t_n,w_n) + (h²/2)×[f_t + f_y×f]
 ```
 
-**Ordre :** Erreur globale O(h²)
+Ordre : Erreur globale O(h²)
 
 ---
 
-#### **C) RUNGE-KUTTA D'ORDRE 2 (Heun)**
+#### C) RUNGE-KUTTA D'ORDRE 2 (Heun)
 
-**Formule :**
+Formule :
 ```
 w_{n+1} = w_n + (h/2)×[f(t_n,w_n) + f(t_{n+1}, w_n + h×f(t_n,w_n))]
 ```
 
-**Ordre :** Erreur globale O(h²)
+Ordre : Erreur globale O(h²)
 
 ---
 
-#### **D) RUNGE-KUTTA D'ORDRE 4 (RK4)**
+#### D) RUNGE-KUTTA D'ORDRE 4 (RK4)
 
-**Formule :**
+Formule :
 ```
-k₁ = h×f(t_n, w_n)
-k₂ = h×f(t_n + h/2, w_n + k₁/2)
-k₃ = h×f(t_n + h/2, w_n + k₂/2)
-k₄ = h×f(t_n + h, w_n + k₃)
-w_{n+1} = w_n + (k₁ + 2k₂ + 2k₃ + k₄)/6
-```
-
-**⚠️ Créer une colonne pour CHAQUE k_i dans le tableau :**
-
-```markdown
-| n | t_n | k₁ | k₂ | k₃ | k₄ | w_{n+1} | y(t_n) | Erreur |
+k1 = h×f(t_n, w_n)
+k2 = h×f(t_n + h/2, w_n + k1/2)
+k3 = h×f(t_n + h/2, w_n + k2/2)
+k4 = h×f(t_n + h, w_n + k3)
+w_{n+1} = w_n + (k1 + 2k2 + 2k3 + k4)/6
 ```
 
-**Ordre :** Erreur globale O(h⁴)
+⚠️ Créer une colonne pour CHAQUE k_i dans le tableau :
+
+| n | t_n | k1 | k2 | k3 | k4 | w_{n+1} | y(t_n) | Erreur |
+|---|-----|----|----|----|----|---------|--------|--------|
+
+Ordre : Erreur globale O(h⁴)
 
 ---
 
-### **3. COMPARAISON DES MÉTHODES**
+### 3. COMPARAISON DES MÉTHODES
 
-**Créer un tableau récapitulatif :**
+Créer un tableau récapitulatif :
 
-```markdown
 | Méthode | Ordre | Erreur à t=1 | Temps de calcul |
 |---------|-------|--------------|-----------------|
 | Euler | O(h) | 0.1826 | Rapide |
 | Taylor 2 | O(h²) | 0.0078 | Moyen |
 | RK4 | O(h⁴) | 0.00004 | Plus lent |
-```
 
 ---
 
-## 💡 EXEMPLE COMPLET (à suivre comme modèle)
+## EXEMPLE COMPLET (à suivre comme modèle)
 
-**Voir `Corrigé CC1_2024.pdf` pages avec tableaux complets.**
+Voir Corrigé CC1_2024.pdf pages avec tableaux complets.
 
 ---
 
-## ⚠️ ERREURS FRÉQUENTES À ÉVITER
+## ERREURS FRÉQUENTES À ÉVITER
 
 ❌ Ne pas créer de tableau pour les itérations
 ❌ Oublier les dérivées partielles pour Taylor
-❌ Ne pas montrer les calculs intermédiaires de k₁, k₂, k₃, k₄
+❌ Ne pas montrer les calculs intermédiaires de k1, k2, k3, k4
 ❌ Oublier la vérification de la solution exacte
 ❌ Ne pas calculer les erreurs |y(t_n) - w_n|
+❌ Utiliser du LaTeX (interdit !)
