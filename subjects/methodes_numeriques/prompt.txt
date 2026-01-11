@@ -1,3 +1,4 @@
+Do not use any*，**(star sign) or latex, use Unicode. Do not bold text.
 # MÉTHODES NUMÉRIQUES - Prompt Spécialisé
 
 RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (β, y'(t), exp(-cos(t)), etc.)
