@@ -1,88 +1,88 @@
-# 📊 STATISTIQUES - Prompt Spécialisé
+# STATISTIQUES - Prompt Spécialisé
 
-## 📖 DOCUMENTS DE RÉFÉRENCE
-- **Régression linéaire simple :** `Chapitre 3 - RLS-Cmo.pdf`
-- **Régression linéaire multiple :** `Chapitre 4 _RLM-Cmo.pdf`
-- **Statistiques inférentielles :** `SDD- stat inf- 2025.pdf`
+RAPPEL FORMAT : AUCUN LATEX - Tout en texte pur avec notations simples (β, R², t, F, chi², etc.)
+
+## DOCUMENTS DE RÉFÉRENCE
+- Régression linéaire simple : Chapitre 3 - RLS-Cmo.pdf
+- Régression linéaire multiple : Chapitre 4 _RLM-Cmo.pdf
+- Statistiques inférentielles : SDD- stat inf- 2025.pdf
 
 ---
 
-## 🎯 MÉTHODOLOGIE DÉTAILLÉE
+## MÉTHODOLOGIE DÉTAILLÉE
 
-### **1. RÉGRESSION LINÉAIRE SIMPLE : Y = β₀ + β₁X + ε**
+### 1. RÉGRESSION LINÉAIRE SIMPLE : Y = β0 + β1 X + ε
 
-#### **ÉTAPE 1 : TABLEAU DES DONNÉES**
+#### ÉTAPE 1 : TABLEAU DES DONNÉES
 
-**🔴 TABLEAU OBLIGATOIRE :**
+TABLEAU OBLIGATOIRE :
 
-```markdown
 | i | xi | yi | xi-x̄ | yi-ȳ | (xi-x̄)(yi-ȳ) | (xi-x̄)² | (yi-ȳ)² |
 |---|----|----|------|------|---------------|---------|---------|
 | 1 | ... | ... | ... | ... | ... | ... | ... |
 | 2 | ... | ... | ... | ... | ... | ... | ... |
 | ... | ... | ... | ... | ... | ... | ... | ... |
-| **Σ** | **Σxi** | **Σyi** | **0** | **0** | **Σ(xi-x̄)(yi-ȳ)** | **Σ(xi-x̄)²** | **Σ(yi-ȳ)²** |
-```
+| Σ | Σxi | Σyi | 0 | 0 | Σ(xi-x̄)(yi-ȳ) | Σ(xi-x̄)² | Σ(yi-ȳ)² |
 
-**Calculs préliminaires DÉTAILLÉS :**
+Calculs préliminaires DÉTAILLÉS :
 
 ```
 Exemple pour i=1 :
-x₁ = ... , y₁ = ...
+x1 = ... , y1 = ...
 x̄ = Σxi/n = (...+...+...)/n = .../n = ...
 ȳ = Σyi/n = (...+...+...)/n = .../n = ...
 
-x₁-x̄ = ... - ... = ...
-y₁-ȳ = ... - ... = ...
-(x₁-x̄)(y₁-ȳ) = ... × ... = ...
-(x₁-x̄)² = (...)² = ...
-(y₁-ȳ)² = (...)² = ...
+x1-x̄ = ... - ... = ...
+y1-ȳ = ... - ... = ...
+(x1-x̄)(y1-ȳ) = ... × ... = ...
+(x1-x̄)² = (...)² = ...
+(y1-ȳ)² = (...)² = ...
 ```
 
 ---
 
-#### **ÉTAPE 2 : ESTIMATION DES PARAMÈTRES**
+#### ÉTAPE 2 : ESTIMATION DES PARAMÈTRES
 
-**a) Calcul de β₁ :**
+a) Calcul de β1 :
 ```
-β₁ = Σ(xi-x̄)(yi-ȳ) / Σ(xi-x̄)²
-β₁ = ... / ... = ...
-```
-
-**Interprétation :** "Quand X augmente de 1 unité, Y augmente en moyenne de β₁ = ... unités"
-
-**b) Calcul de β₀ :**
-```
-β₀ = ȳ - β₁×x̄
-β₀ = ... - ...×... = ...
+β1 = Σ(xi-x̄)(yi-ȳ) / Σ(xi-x̄)²
+β1 = ... / ... = ...
 ```
 
-**Interprétation :** "Quand X = 0, Y vaut en moyenne β₀ = ..."
+Interprétation : "Quand X augmente de 1 unité, Y augmente en moyenne de β1 = ... unités"
 
-**c) Équation de régression :**
+b) Calcul de β0 :
 ```
-ŷ = β₀ + β₁×x = ... + ...×x
+β0 = ȳ - β1×x̄
+β0 = ... - ...×... = ...
+```
+
+Interprétation : "Quand X = 0, Y vaut en moyenne β0 = ..."
+
+c) Équation de régression :
+```
+ŷ = β0 + β1×x = ... + ...×x
 ```
 
 ---
 
-#### **ÉTAPE 3 : QUALITÉ DE L'AJUSTEMENT (R²)**
+#### ÉTAPE 3 : QUALITÉ DE L'AJUSTEMENT (R²)
 
-**a) Sommes des carrés :**
+a) Sommes des carrés :
 ```
 SCT (totale) = Σ(yi-ȳ)² = ... (du tableau)
-SCE (expliquée) = β₁² × Σ(xi-x̄)² = (...)² × ... = ...
+SCE (expliquée) = β1² × Σ(xi-x̄)² = (...)² × ... = ...
 SCR (résiduelle) = SCT - SCE = ... - ... = ...
 ```
 
-**b) Coefficient de détermination :**
+b) Coefficient de détermination :
 ```
 R² = SCE/SCT = .../... = ... = ...%
 ```
 
-**✅ INTERPRÉTATION :** "Le modèle explique ...% de la variance de Y"
+INTERPRÉTATION : "Le modèle explique ...% de la variance de Y"
 
-**c) Variance résiduelle :**
+c) Variance résiduelle :
 ```
 s² = SCR/(n-2) = .../... = ...
 s = √s² = √... = ...
@@ -90,154 +90,153 @@ s = √s² = √... = ...
 
 ---
 
-#### **ÉTAPE 4 : TEST DE SIGNIFICATION DE β₁**
+#### ÉTAPE 4 : TEST DE SIGNIFICATION DE β1
 
-**H₀ : β₁ = 0 vs H₁ : β₁ ≠ 0**
+H0 : β1 = 0 vs H1 : β1 ≠ 0
 
-**🔴 TABLEAU OBLIGATOIRE :**
+TABLEAU OBLIGATOIRE :
 
-```markdown
 | Élément | Valeur | Calcul détaillé |
 |---------|--------|-----------------|
-| β₁ estimé | ... | Σ(xi-x̄)(yi-ȳ)/Σ(xi-x̄)² |
+| β1 estimé | ... | Σ(xi-x̄)(yi-ȳ)/Σ(xi-x̄)² |
 | s | ... | √[SCR/(n-2)] |
-| Erreur std de β₁ | ... | s/√Σ(xi-x̄)² = .../√... |
-| t observé | ... | β₁/(s/√Σ(xi-x̄)²) = ... |
+| Erreur std de β1 | ... | s/√Σ(xi-x̄)² = .../√... |
+| t observé | ... | β1/(s/√Σ(xi-x̄)²) = ... |
 | ddl | n-2 = ... | |
 | t critique | ... | Table Student (α=0.05, n-2 ddl) |
 | p-value | ... | P(|T| > |t_obs|) |
-| **Décision** | ... | Si |t_obs| > t_crit → Rejet H₀ |
-```
+| Décision | ... | Si |t_obs| > t_crit → Rejet H0 |
 
-**✅ CONCLUSION :** "Au seuil α=5%, on [rejette/ne rejette pas] H₀. β₁ est [significatif/non significatif]"
-
----
-
-#### **ÉTAPE 5 : INTERVALLE DE CONFIANCE À 95% POUR β₁**
-
-```
-IC₉₅%(β₁) = β₁ ± t_{0.025, n-2} × (s/√Σ(xi-x̄)²)
-IC₉₅%(β₁) = ... ± ... × ...
-IC₉₅%(β₁) = [... ; ...]
-```
-
-**✅ INTERPRÉTATION :** "Avec 95% de confiance, β₁ ∈ [... ; ...]"
+CONCLUSION : "Au seuil α=5%, on [rejette/ne rejette pas] H0. β1 est [significatif/non significatif]"
 
 ---
 
-### **2. RÉGRESSION LINÉAIRE MULTIPLE : Y = β₀ + β₁X₁ + β₂X₂ + ... + ε**
+#### ÉTAPE 5 : INTERVALLE DE CONFIANCE À 95% POUR β1
 
-#### **NOTATION MATRICIELLE OBLIGATOIRE**
-
-**Matrices de données :**
 ```
-     [1  x₁₁  x₁₂  ...  x₁p]       [y₁]
-X =  [1  x₂₁  x₂₂  ...  x₂p]   Y = [y₂]
-     [⋮   ⋮    ⋮         ⋮ ]       [⋮]
-     [1  xn₁  xn₂  ...  xnp]       [yn]
+IC_95%(β1) = β1 ± t_{0.025, n-2} × (s/√Σ(xi-x̄)²)
+IC_95%(β1) = ... ± ... × ...
+IC_95%(β1) = [... ; ...]
 ```
 
-**a) Calcul de X'X :**
+INTERPRÉTATION : "Avec 95% de confiance, β1 ∈ [... ; ...]"
+
+---
+
+### 2. RÉGRESSION LINÉAIRE MULTIPLE : Y = β0 + β1 X1 + β2 X2 + ... + ε
+
+#### NOTATION MATRICIELLE OBLIGATOIRE
+
+Matrices de données :
+
+Matrice Y (n lignes × 1 colonne) :
+Y = [y1, y2, ..., yn]' (transposée)
+
+Matrice X (n lignes × p colonnes) :
+- Colonne 1 : des 1 (pour l'intercept β0)
+- Colonne 2 : variable X1
+- Colonne 3 : variable X2
+- etc.
+
+Exemple pour n=10, p=3 :
+
+| Ligne | Constante | X1 (Revenu) | X2 (Température) |
+|-------|-----------|-------------|------------------|
+| 1 | 1 | 35 | 6 |
+| 2 | 1 | 30 | 9 |
+| ... | ... | ... | ... |
+| 10 | 1 | 25 | 8 |
+
+Vecteur β (p lignes × 1 colonne) :
+β = [β0, β1, β2, ...]'
+
+a) Calcul de X'X :
 ```
-X'X = [n      Σx₁i    Σx₂i   ...]
-      [Σx₁i   Σx₁i²   Σx₁ix₂i ...]
-      [Σx₂i   Σx₁ix₂i Σx₂i²   ...]
-      
-Montrer CHAQUE multiplication :
+X'X = matrice (p × p)
 X'X[1,1] = 1×1 + 1×1 + ... = n
-X'X[1,2] = 1×x₁₁ + 1×x₂₁ + ... = Σx₁i
+X'X[1,2] = 1×x11 + 1×x21 + ... = Σx1i
 ...
+Montrer CHAQUE multiplication
 ```
 
-**b) Calcul de (X'X)⁻¹ :**
+b) Calcul de (X'X)^(-1) :
 ```
 Méthode : déterminant + comatrice
 det(X'X) = ...
 Cofacteurs : ...
-(X'X)⁻¹ = ...
+(X'X)^(-1) = ...
 ```
 
-**c) Calcul de X'Y :**
+c) Calcul de X'Y :
 ```
-X'Y = [Σyi]
-      [Σx₁iyi]
-      [Σx₂iyi]
-      [...]
+X'Y = [Σyi, Σx1i×yi, Σx2i×yi, ...]'
 ```
 
-**d) Estimation β̂ :**
+d) Estimation β_hat :
 ```
-β̂ = (X'X)⁻¹X'Y = [...] × [...] = [β₀]
-                                   [β₁]
-                                   [β₂]
+β_hat = (X'X)^(-1) × X'Y = [...] × [...] = [β0, β1, β2, ...]'
 ```
 
 ---
 
-#### **TEST F GLOBAL**
+#### TEST F GLOBAL
 
-**H₀ : β₁ = β₂ = ... = βp = 0**
+H0 : β1 = β2 = ... = βp = 0
 
-**🔴 TABLEAU ANOVA OBLIGATOIRE :**
+TABLEAU ANOVA OBLIGATOIRE :
 
-```markdown
 | Source | SC | ddl | CM | F | F_critique | Décision |
 |--------|----|----|-----|---|------------|----------|
-| Régression | SCE = ... | p | CME = SCE/p = ... | F = CME/CMR = ... | ... | ... |
-| Résiduelle | SCR = ... | n-p-1 | CMR = SCR/(n-p-1) = ... | | | |
-| **Totale** | **SCT = ...** | **n-1** | | | | |
-```
+| Régression | SCE = ... | p-1 | CME = SCE/(p-1) = ... | F = CME/CMR = ... | ... | ... |
+| Résiduelle | SCR = ... | n-p | CMR = SCR/(n-p) = ... | | | |
+| Totale | SCT = ... | n-1 | | | | |
 
-**Calculs détaillés :**
+Calculs détaillés :
 ```
 SCE = Σ(ŷi-ȳ)² = ...
 SCR = Σ(yi-ŷi)² = ...
 SCT = Σ(yi-ȳ)² = ...
 Vérification : SCT = SCE + SCR ✓
 
-F = [SCE/p] / [SCR/(n-p-1)] = ... / ... = ...
-F_critique = F(α=0.05, p, n-p-1) = ... (table)
+F = [SCE/(p-1)] / [SCR/(n-p)] = ... / ... = ...
+F_critique = F(α=0.05, p-1, n-p) = ... (table)
 ```
 
-**✅ CONCLUSION :** "Si F > F_critique → au moins un βj ≠ 0"
+CONCLUSION : "Si F > F_critique → au moins un βj ≠ 0"
 
 ---
 
-### **3. TESTS D'HYPOTHÈSES**
+### 3. TESTS D'HYPOTHÈSES
 
-#### **A) TEST SUR UNE MOYENNE (Student)**
+#### A) TEST SUR UNE MOYENNE (Student)
 
-**H₀ : μ = μ₀**
+H0 : μ = μ0
 
-**🔴 TABLEAU OBLIGATOIRE :**
+TABLEAU OBLIGATOIRE :
 
-```markdown
 | Étape | Calcul | Valeur |
 |-------|--------|--------|
 | Moyenne échantillon | x̄ = Σxi/n | ... |
 | Écart-type | s = √[Σ(xi-x̄)²/(n-1)] | ... |
 | Erreur standard | SE = s/√n | ... |
-| t observé | t = (x̄-μ₀)/SE | ... |
+| t observé | t = (x̄-μ0)/SE | ... |
 | ddl | n-1 | ... |
 | t critique | Table Student (α, n-1) | ... |
-| **Décision** | |t| > t_crit ? | Rejet/Acceptation |
-```
+| Décision | |t| > t_crit ? | Rejet/Acceptation |
 
 ---
 
-#### **B) TEST DU CHI² (Ajustement/Indépendance)**
+#### B) TEST DU CHI² (Ajustement/Indépendance)
 
-**🔴 TABLEAU OBLIGATOIRE :**
+TABLEAU OBLIGATOIRE :
 
-```markdown
 | Modalité | Observé Oi | Théorique Ei | (Oi-Ei)² | (Oi-Ei)²/Ei |
 |----------|------------|--------------|----------|-------------|
 | 1 | ... | ... | ... | ... |
 | 2 | ... | ... | ... | ... |
-| **Total** | **Σ Oi = n** | **Σ Ei = n** | - | **χ² = Σ(Oi-Ei)²/Ei = ...** |
-```
+| Total | Σ Oi = n | Σ Ei = n | - | chi² = Σ(Oi-Ei)²/Ei = ... |
 
-**Calculs détaillés pour chaque ligne :**
+Calculs détaillés pour chaque ligne :
 ```
 Ligne 1 : 
 Ei = n×pi = ...×... = ...
@@ -245,19 +244,20 @@ Ei = n×pi = ...×... = ...
 (Oi-Ei)²/Ei = .../... = ...
 ```
 
-**Décision :**
+Décision :
 ```
 ddl = k - 1 - nombre de paramètres estimés = ...
-χ²_critique (α=0.05, ddl) = ... (table)
-Si χ²_obs > χ²_crit → Rejet H₀
+chi²_critique (α=0.05, ddl) = ... (table)
+Si chi²_obs > chi²_crit → Rejet H0
 ```
 
 ---
 
-## 💡 ERREURS FRÉQUENTES À ÉVITER
+## ERREURS FRÉQUENTES À ÉVITER
 
 ❌ Oublier le tableau de calculs préliminaires
 ❌ Ne pas interpréter R²
 ❌ Confondre SCE et SCR
 ❌ Oublier les ddl dans les tests
 ❌ Ne pas vérifier SCT = SCE + SCR
+❌ Utiliser du LaTeX (interdit !)
