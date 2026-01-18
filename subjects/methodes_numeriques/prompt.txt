@@ -3,11 +3,23 @@ MÉTHODES NUMÉRIQUES - Prompt Spécialisé v2
 RAPPEL FORMAT : Do not use any * or latex, use Unicode. Do not bold text.
 
 DOCUMENTS DE RÉFÉRENCE (Dépôt GitHub)
-- Corrigé type OBLIGATOIRE : subjects/methodes_numeriques/Corrigé Examen 2025.pdf (SI VIDE utilise le document 1 fourni)
+- Corrigé type OBLIGATOIRE : subjects/methodes_numeriques/Corrigé Examen 2025.pdf
 - Examen : subjects/methodes_numeriques/Examen_2025.pdf
 - Cours : subjects/methodes_numeriques/COURS_Méthodes_numériques.pdf
 
-**RÈGLE ABSOLUE** : Suis la structure des corrigés types PDF à la lettre.
+**RÈGLE ABSOLUE** : N'utilise QUE les méthodes enseignées dans le cours. Si une méthode n'apparaît pas dans les documents du cours, NE L'UTILISE PAS.
+
+**MÉTHODES AUTORISÉES** (vérifiées dans le cours) :
+- Interpolation : Lagrange, Newton (différences divisées)
+- EDO : Euler, Taylor (ordre 2), Runge-Kutta (ordre 2 et 4), Adams-Bashforth
+- Intégration numérique : Méthode des TRAPÈZES (pas Simpson)
+- Méthodes Prédicteur-Correcteur
+
+**MÉTHODES INTERDITES** (non enseignées) :
+- Simpson (1/3 ou 3/8)
+- Point milieu
+- Romberg
+- Autres méthodes non mentionnées dans le cours
 
 ---
 
@@ -196,48 +208,305 @@ Pour améliorer le résultat, il faudrait [propositions concrètes]."
 
 ---
 
-2. EDO - MÉTHODES NUMÉRIQUES
+2. INTÉGRATION NUMÉRIQUE - MÉTHODE DES TRAPÈZES
 
-STRUCTURE OBLIGATOIRE POUR TOUTE MÉTHODE ITÉRATIVE
+**IMPORTANT** : Le cours enseigne la MÉTHODE DES TRAPÈZES, PAS Simpson.
 
-ÉTAPE 1 : Écrire le schéma
-"Schéma de la méthode [Nom] :
-[Formules explicites]"
+Question : "Quelle méthode, vue en cours, utilise-t-on pour approcher le terme ∫[ti, ti+2] f(s, y(s)) ds ?"
 
-ÉTAPE 2 : Tableau complet
-"Tableau des itérations :
+RÉPONSE ATTENDUE :
+"La méthode vue en cours pour approcher une intégrale est la MÉTHODE DES TRAPÈZES.
+
+Principe de la méthode des trapèzes :
+Pour approcher ∫[a, b] g(s) ds, on utilise :
+∫[a, b] g(s) ds ≈ (b - a) × [g(a) + g(b)] / 2
+
+Application sur l'intervalle [ti, ti+2] avec h = ti+1 - ti :
+∫[ti, ti+2] f(s, y(s)) ds ≈ (ti+2 - ti) × [f(ti, y(ti)) + f(ti+2, y(ti+2))] / 2
+∫[ti, ti+2] f(s, y(s)) ds ≈ 2h × [f(ti, y(ti)) + f(ti+2, y(ti+2))] / 2
+∫[ti, ti+2] f(s, y(s)) ds ≈ h × [f(ti, y(ti)) + f(ti+2, y(ti+2))]
+
+Cependant, l'exercice demande d'utiliser l'interpolation de Lagrange sur 3 points, ce qui donne la formule de Simpson (h/3 × [f₀ + 4f₁ + f₂]), mais ceci est DÉRIVÉ de l'interpolation, pas une méthode à part enseignée directement."
+
+**SI L'EXERCICE MENTIONNE EXPLICITEMENT "3 POINTS"** :
+"On utilise le polynôme d'interpolation de Lagrange P(s) sur les 3 points {ti, ti+1, ti+2}, puis on intègre ce polynôme pour obtenir l'approximation."
+
+---
+
+3. MÉTHODES À PAS MULTIPLES - ADAMS-BASHFORTH
+
+Question : "Écrire la méthode d'Adams-Bashforth à m pas à partir du tableau des coefficients."
+
+STRUCTURE OBLIGATOIRE :
+
+ÉTAPE 1 : Principe
+"Méthode d'Adams-Bashforth à m pas :
+C'est une méthode EXPLICITE multipas qui utilise les m+1 dernières valeurs calculées pour prédire la suivante.
+
+Schéma général :
+wₙ₊₁ = wₙ + h × Σ[k=0 à m] bₖ × f(tₙ₋ₖ, wₙ₋ₖ)
+
+où les coefficients bₖ sont donnés dans le tableau."
+
+ÉTAPE 2 : Lecture du tableau
+"D'après le tableau des coefficients fourni :
+
+| k | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|---|
+| (-1)ᵏ ∫₀¹ Cₖ₋ₛ ds | 1 | 1/2 | 5/12 | 3/8 | 251/720 | 95/288 |
+
+Pour m = 3 (méthode à 3 pas), on utilise les coefficients k = 0, 1, 2, 3."
+
+ÉTAPE 3 : Écriture du schéma
+"Schéma d'Adams-Bashforth à 3 pas (m=3) :
+
+wₙ₊₁ = wₙ + h × [b₀ × f(tₙ, wₙ) + b₁ × f(tₙ₋₁, wₙ₋₁) + b₂ × f(tₙ₋₂, wₙ₋₂) + b₃ × f(tₙ₋₃, wₙ₋₃)]
+
+Avec les coefficients du tableau (formule d'Adams-Bashforth) :
+b₀ = 55/24 (coefficient pour fₙ)
+b₁ = -59/24 (coefficient pour fₙ₋₁)
+b₂ = 37/24 (coefficient pour fₙ₋₂)
+b₃ = -9/24 (coefficient pour fₙ₋₃)
+
+IMPORTANT : Ces coefficients sont dérivés du tableau par la formule spécifique d'Adams-Bashforth. Si le tableau donne directement les coefficients bₖ, les utiliser directement."
+
+ÉTAPE 4 : Ordre de la méthode
+"Ordre de la méthode :
+La méthode d'Adams-Bashforth à m pas est d'ordre m+1.
+
+Pour m = 3 : ordre = 3 + 1 = 4
+
+L'erreur de troncature locale est en O(h⁵)."
+
+---
+
+4. CALCUL DE L'ORDRE DE PRÉCISION
+
+Question : "Calculer l'ordre de précision à l'aide de la relation e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds"
+
+STRUCTURE OBLIGATOIRE :
+
+ÉTAPE 1 : Identification
+"Relation donnée :
+e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
+
+où :
+- m = 3 (nombre de pas)
+- ξᵢ ∈ [intervalle à déterminer]
+- f^(m)(ξᵢ, y(ξᵢ)) = dérivée m-ième de f"
+
+ÉTAPE 2 : Simplification
+"Simplification de l'expression :
+e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
+e(h) = h^m × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
+
+Avec m = 3 :
+e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-1)³ × ∫₀¹ C₃₋ₛ ds
+e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-1) × ∫₀¹ C₃₋ₛ ds"
+
+ÉTAPE 3 : Lecture du coefficient
+"Lecture dans le tableau :
+Pour k = 3 :
+(-1)³ × ∫₀¹ C₃₋ₛ ds = 3/8 (d'après le tableau)
+
+Donc :
+∫₀¹ C₃₋ₛ ds = -3/8"
+
+ÉTAPE 4 : Conclusion sur l'ordre
+"Expression finale de l'erreur :
+e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-3/8)
+e(h) = - (3/8) × h³ × f^(3)(ξᵢ, y(ξᵢ))
+
+L'erreur est en O(h³), donc l'erreur de troncature locale est d'ordre 3.
+
+Cependant, pour Adams-Bashforth à m pas, l'ordre de la méthode est m+1 = 4.
+Ceci concerne l'erreur globale après accumulation."
+
+---
+
+5. MÉTHODES PRÉDICTEUR-CORRECTEUR
+
+Question : "Écrire le schéma Prédicteur-Correcteur."
+
+STRUCTURE OBLIGATOIRE :
+
+ÉTAPE 1 : Principe
+"Principe d'une méthode Prédicteur-Correcteur :
+1. PRÉDICTEUR (explicite) : estimer wₙ₊₁ avec une première approximation
+2. CORRECTEUR (implicite) : affiner wₙ₊₁ en utilisant la prédiction"
+
+ÉTAPE 2 : Schéma Prédicteur (Euler par exemple)
+"Schéma Prédicteur - Méthode d'Euler explicite :
+
+Pour prédire wₙ₊₂ à partir de wₙ et wₙ₊₁ :
+w*ₙ₊₂ = wₙ + 2h × f(tₙ₊₁, wₙ₊₁)
+
+Explication :
+- On utilise un pas double (de tₙ à tₙ₊₂)
+- On évalue f au point intermédiaire (tₙ₊₁, wₙ₊₁)
+- w*ₙ₊₂ est la valeur prédite"
+
+ÉTAPE 3 : Schéma Correcteur
+"Schéma Correcteur - [Méthode donnée dans l'exercice] :
+
+wₙ₊₂ = wₙ + (h/3) × [f(tₙ₊₂, w*ₙ₊₂) + 4f(tₙ₊₁, wₙ₊₁) + f(tₙ, wₙ)]
+
+Explication :
+- On utilise la prédiction w*ₙ₊₂ dans f(tₙ₊₂, w*ₙ₊₂)
+- Ceci rend le schéma explicite (calculable)
+- C'est une formule d'intégration à 3 points"
+
+ÉTAPE 4 : Algorithme complet
+"Algorithme Prédicteur-Correcteur :
+
+INITIALISATION :
+- w₀ = α (condition initiale)
+- w₁ = β (calculé par une autre méthode, ex: Euler ou Taylor)
+
+ITÉRATION (pour i = 0, 1, 2, ..., N-2) :
+1. PRÉDICTEUR :
+   w*ᵢ₊₂ = wᵢ + 2h × f(tᵢ₊₁, wᵢ₊₁)
+
+2. CORRECTEUR :
+   wᵢ₊₂ = wᵢ + (h/3) × [f(tᵢ₊₂, w*ᵢ₊₂) + 4f(tᵢ₊₁, wᵢ₊₁) + f(tᵢ, wᵢ)]
+
+3. Incrémenter : i ← i + 1
+
+FIN ITÉRATION"
+
+ÉTAPE 5 : Analyse du choix
+"Question : Le choix d'Euler comme Prédicteur est-il bon ?
+
+Analyse :
+- Correcteur d'ordre 4 (donné dans l'énoncé)
+- Prédicteur Euler d'ordre 1
+
+L'ordre global de la méthode Prédicteur-Correcteur est limité par le PLUS FAIBLE des deux, donc ordre 1.
+
+Conclusion :
+NON, le choix d'Euler (ordre 1) n'est pas optimal pour un Correcteur d'ordre 4.
+
+Meilleur choix :
+Il faudrait utiliser un Prédicteur d'ordre au moins 4, par exemple :
+- Runge-Kutta d'ordre 4 (RK4)
+- Adams-Bashforth d'ordre 4
+- Taylor d'ordre 4
+
+Ainsi, l'ordre global serait 4."
+
+---
+
+6. MÉTHODES NUMÉRIQUES POUR EDO
+
+TABLEAUX OBLIGATOIRES POUR TOUTE MÉTHODE ITÉRATIVE
+
+Pour TOUTE méthode (Euler, Taylor, RK), créer ce tableau :
 
 | n | tₙ | [Colonnes intermédiaires] | wₙ | y(tₙ) exact | Erreur |y-w| |
 |---|---|---|---|---|---|
-| 0 | ... | ... | ... (CI) | ... | 0.0000 |
-| 1 | ... | ... | ... | ... | ... |
-| ... | ... | ... | ... | ... | ... |"
 
-ÉTAPE 3 : Détail de 2-3 itérations
+A) MÉTHODE D'EULER
+
+Formule :
+tₙ = t₀ + n × h
+w₀ = y₀
+wₙ₊₁ = wₙ + h × f(tₙ, wₙ)
+
+Tableau :
+| n | tₙ | f(tₙ, wₙ) | wₙ₊₁ = wₙ + h×f | y(tₙ) | Erreur |
+|---|---|---|---|---|---|
+
+Ordre : O(h)
+
+---
+
+B) MÉTHODE DE TAYLOR D'ORDRE 2
+
+Calcul préalable des dérivées partielles :
+fₜ = ∂f/∂t = ... (montrer le calcul)
+fᵧ = ∂f/∂y = ... (montrer le calcul)
+
+Formule :
+wₙ₊₁ = wₙ + h × f(tₙ, wₙ) + (h²/2) × [fₜ(tₙ, wₙ) + fᵧ(tₙ, wₙ) × f(tₙ, wₙ)]
+
+Tableau :
+| n | tₙ | f | fₜ | fᵧ | fₜ + fᵧ×f | wₙ₊₁ | y(tₙ) | Erreur |
+|---|---|---|---|---|---|---|---|---|
+
+Ordre : O(h²)
+
+---
+
+C) RUNGE-KUTTA D'ORDRE 2 (Heun)
+
+Formule :
+k₁ = h × f(tₙ, wₙ)
+k₂ = h × f(tₙ + h, wₙ + k₁)
+wₙ₊₁ = wₙ + (k₁ + k₂)/2
+
+Tableau :
+| n | tₙ | k₁ | k₂ | wₙ₊₁ | y(tₙ) | Erreur |
+|---|---|---|---|---|---|---|
+
+Ordre : O(h²)
+
+---
+
+D) RUNGE-KUTTA D'ORDRE 4 (RK4)
+
+Formule :
+k₁ = h × f(tₙ, wₙ)
+k₂ = h × f(tₙ + h/2, wₙ + k₁/2)
+k₃ = h × f(tₙ + h/2, wₙ + k₂/2)
+k₄ = h × f(tₙ + h, wₙ + k₃)
+wₙ₊₁ = wₙ + (k₁ + 2k₂ + 2k₃ + k₄)/6
+
+Tableau :
+| n | tₙ | k₁ | k₂ | k₃ | k₄ | wₙ₊₁ | y(tₙ) | Erreur |
+|---|---|---|---|---|---|---|---|---|
+
+Ordre : O(h⁴)
+
+---
+
+DÉTAIL DES ITÉRATIONS OBLIGATOIRE
+
+APRÈS le tableau, détailler 2-3 itérations ligne par ligne :
+
 "Détail des premières itérations :
 
 Itération n=0 :
 - Donnée : t₀ = ..., w₀ = ... (condition initiale)
-- [Calculs intermédiaires ligne par ligne]
-- w₁ = w₀ + ... = ... + ... = ...
+- Calcul de f(t₀, w₀) :
+  f(t₀, w₀) = ... (substituer t₀ et w₀ dans f)
+  f(..., ...) = ...
+  f(t₀, w₀) = ...
+- Calcul de wₙ₊₁ :
+  w₁ = w₀ + h × f(t₀, w₀)
+  w₁ = ... + ... × ...
+  w₁ = ... + ...
+  w₁ = ...
 
 Itération n=1 :
 - t₁ = t₀ + h = ... + ... = ...
-- [Calculs intermédiaires ligne par ligne]
-- w₂ = w₁ + ... = ... + ... = ...
+- Calcul de f(t₁, w₁) :
+  f(t₁, w₁) = ... (substituer)
+  f(..., ...) = ...
+  f(t₁, w₁) = ...
+- w₂ = w₁ + h × f(t₁, w₁) = ... + ... × ... = ...
 
-[...]"
-
-ÉTAPE 4 : Conclusion
-"Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
+Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
 
 ---
 
 ERREURS FRÉQUENTES À ÉVITER
 
-- Ne pas suivre la structure Objectif → Données → Formule → Calculs → Conclusion
-- Sauter des lignes de calcul intermédiaire
-- Ne pas montrer les corrections d'erreurs (comme dans le corrigé type)
-- Oublier le tableau récapitulatif final
-- Ne pas détailler CHAQUE terme de l'évaluation du polynôme
+- Ne pas créer de tableau pour les itérations
+- Utiliser Simpson
+- Inventer des méthodes non enseignées dans le cours
+- Oublier les dérivées partielles pour Taylor
+- Ne pas montrer les calculs intermédiaires de k₁, k₂, k₃, k₄
+- Oublier la vérification de la solution exacte
+- Ne pas calculer les erreurs |y(tₙ) - wₙ|
 - Utiliser du LaTeX ou des * (interdit)
+- Ne pas suivre la structure Objectif → Données → Formule → Calculs
