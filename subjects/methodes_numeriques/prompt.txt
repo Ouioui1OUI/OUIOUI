@@ -1,203 +1,243 @@
-MÉTHODES NUMÉRIQUES - Prompt Spécialisé
+MÉTHODES NUMÉRIQUES - Prompt Spécialisé v2
 
 RAPPEL FORMAT : Do not use any * or latex, use Unicode. Do not bold text.
 
-Exemples de formules correctes :
-- y'(t) = f(t,y) = y(t) sin(t) + sin(t)
-- wₙ₊₁ = wₙ + h × f(tₙ, wₙ)
-- μ(t) = exp(∫ p(t)dt)
-- ∂f/∂y = sin(t)
-- |z(t) - y(t)| ≤ K × ε
+DOCUMENTS DE RÉFÉRENCE (Dépôt GitHub)
+- Corrigé type OBLIGATOIRE : subjects/methodes_numeriques/Corrigé Examen 2025.pdf (SI VIDE utilise le document 1 fourni)
+- Examen : subjects/methodes_numeriques/Examen_2025.pdf
+- Cours : subjects/methodes_numeriques/COURS_Méthodes_numériques.pdf
 
-DOCUMENTS DE RÉFÉRENCE
-- Cours complet : COURS_Méthodes_numériques.pdf
-- Correction type : Corrigé CC1_2024.pdf
+**RÈGLE ABSOLUE** : Suis la structure des corrigés types PDF à la lettre.
 
 ---
 
-MÉTHODOLOGIE DÉTAILLÉE
+1. INTERPOLATION POLYNOMIALE
 
-1. PROBLÈME DE CAUCHY : y'(t) = f(t,y), y(t₀) = y₀
+STRUCTURE OBLIGATOIRE POUR LAGRANGE
 
-Q1 : EXISTENCE ET UNICITÉ (Théorème Cauchy-Lipschitz)
+Question : "Déterminer le polynôme d'interpolation de Lagrange passant par les points d'abscisses : ..."
 
-Étapes OBLIGATOIRES :
+ÉTAPE 1 : Objectif
+"Objectif : Construire le polynôme P(x) qui passe exactement par les points donnés en utilisant la base de Lagrange."
 
-a) Définir le domaine D
-   - D = {(t,y) : a ≤ t ≤ b, y ∈ ℝ}
-   - Vérifier que D est convexe (tube infini → toujours convexe)
+ÉTAPE 2 : Données
+"Données :
+La fonction est f(x) = ...
+Les points d'interpolation (xᵢ, yᵢ) sont :
+- x₀ = ..., y₀ = f(x₀) = ...
+- x₁ = ..., y₁ = f(x₁) = ...
+- ..."
 
-b) Continuité de f
-   - Décomposer f(t,y) en fonctions élémentaires
-   - Conclure : "f est C∞ sur ℝ×ℝ, donc continue sur D"
+ÉTAPE 3 : Formule
+"Formule de Lagrange :
+Le polynôme d'interpolation est donné par :
+P(x) = Σ yᵢ Lᵢ(x) pour i allant de 0 à n
+où Lᵢ(x) = Π ((x - xⱼ)/(xᵢ - xⱼ)) pour j ≠ i"
 
-c) Condition de Lipschitz (via Théorème 1)
-   - Calculer ∂f/∂y = ...
-   - Montrer |∂f/∂y| ≤ L sur D
-   - Exemple : |∂f/∂y| = |t² cos(t)| ≤ t² ≤ 4 pour t ∈ [0,2]
-   - Conclure : "f lipschitzienne par rapport à y de constante L = ..."
+ÉTAPE 4 : Calcul des dénominateurs
+"Calcul des dénominateurs des polynômes de base Lᵢ(x) :
 
-CONCLUSION : "Le problème admet une solution unique y(t) de classe C¹ sur [a,b]"
+Pour i = 0 (x₀ = ...) :
+D₀ = (x₀ - x₁)(x₀ - x₂)...(x₀ - xₙ)
+D₀ = (...-...)(...-...)(...-...)
+D₀ = (...) × (...) × (...)
+D₀ = ... = .../... (fraction si possible)
 
----
+Pour i = 1 (x₁ = ...) :
+D₁ = (x₁ - x₀)(x₁ - x₂)...(x₁ - xₙ)
+D₁ = (...-...)(...-...)(...-...)
+D₁ = (...) × (...) × (...)
+D₁ = ... = .../...
 
-Q2 : SOLUTION EXACTE
+[Répéter pour TOUS les points]"
 
-Identifier le type d'EDO :
-- Linéaire : y' + p(t)y = q(t)
-- Séparable : y' = g(t)h(y)
-- Bernoulli : y' + p(t)y = q(t)yⁿ
-- Exacte
+ÉTAPE 5 : Construction du polynôme
+"Construction du polynôme P(x) :
+P(x) = (y₀/D₀)N₀(x) + (y₁/D₁)N₁(x) + ... + (yₙ/Dₙ)Nₙ(x)
+où Nᵢ(x) sont les numérateurs correspondants."
 
-Pour EDO LINÉAIRE (le plus fréquent) :
+ÉTAPE 6 : Calcul des coefficients
+"Calcul des coefficients Cᵢ = yᵢ/Dᵢ :
+C₀ = y₀ / D₀ = ... / (...) = ...
+C₁ = y₁ / D₁ = ... / (...) = ...
+[...]
 
-a) Équation homogène
-y' + p(t)y = 0
-→ Solution : yₕ(t) = λ exp(-∫p(t)dt)
+Expression du polynôme de Lagrange :
+P(x) = C₀(x-x₁)(x-x₂)...(x-xₙ) + C₁(x-x₀)(x-x₂)...(x-xₙ) + ..."
 
-b) Facteur intégrant
-μ(t) = exp(∫p(t)dt)
-Calcul détaillé : ∫p(t)dt = ...
-μ(t) = exp(...) = ...
+ÉTAPE 7 : Degré du polynôme
+"Degré du polynôme :
+Nous avons n+1 points, donc le degré est au plus n.
+Vérifions le coefficient du terme en x^n (somme des Cᵢ) :
+Somme = C₀ + C₁ + ... + Cₙ
+Somme = ... + ... + ...
+Somme = (.....)/... = ...
 
-c) Solution particulière (Variation de la Constante)
-yₚ(t) = [∫μ(t)q(t)dt] / μ(t)
-Calcul détaillé de l'intégrale : ...
-
-d) Solution générale
-y(t) = yₕ(t) + yₚ(t) = λ exp(...) + ...
-
-e) Application de la condition initiale
-y(t₀) = y₀
-→ Résoudre pour λ : λ = ...
-
-f) VÉRIFICATION OBLIGATOIRE
-y'(t) = ... (dériver)
-f(t,y(t)) = ... (substituer)
-Vérifier : y'(t) = f(t,y(t)) ✓
-Vérifier : y(t₀) = y₀ ✓
-
----
-
-Q3 : PROBLÈME BIEN POSÉ (Stabilité)
-
-Problème perturbé :
-z'(t) = f(t,z) + δ(t), z(t₀) = y₀ + ε₀
-|δ(t)| < ε, |ε₀| < ε
-
-a) Résoudre le problème perturbé (même méthode que Q2)
-
-b) Majorer |z(t) - y(t)|
-|z(t) - y(t)| = |...| 
-≤ |δ| × ... + |ε₀| × ... (inégalités triangulaires)
-≤ K × ε avec K = ... (constante indépendante de ε et t)
-
-CONCLUSION : "Le problème est bien posé : |z-y| ≤ K × ε"
+[Si somme ≠ 0] Le coefficient de x^n n'est pas nul.
+Le degré de ce polynôme est n."
 
 ---
 
-2. MÉTHODES NUMÉRIQUES
+STRUCTURE OBLIGATOIRE POUR NEWTON
 
-RÈGLE CRITIQUE : TABLEAUX OBLIGATOIRES
+Question : "Retrouver le polynôme d'interpolation par la Méthode de Newton."
 
-Pour TOUTE méthode itérative, tu DOIS créer ce tableau :
+ÉTAPE 1 : Objectif
+"Objectif : Utiliser les différences divisées pour écrire P(x) sous la forme de Newton :
+P(x) = a₀ + a₁(x - x₀) + a₂(x - x₀)(x - x₁) + ... + aₙ(x - x₀)(x - x₁)...(x - xₙ₋₁)"
 
-| n | tₙ | sin(tₙ) | f(tₙ,wₙ) = ... | wₙ₊₁ = wₙ + ... | y(tₙ) exact | Erreur |y-w| |
-|---|-----|----------|----------------|-----------------|-------------|---------------|
-| 0 | 0.0 | 0.000    | 2×0 + 0 = 0.000| 2.0 (CI)        | 2.000       | 0.0000        |
-| 1 | 0.1 | 0.0998   | 2×0.0998+... = ...| 2.0 + 0.1×0 = 2.0| 2.0300    | 0.0300        |
+ÉTAPE 2 : Tableau des Différences Divisées
+"Tableau des Différences Divisées :
 
-APRÈS le tableau, détaille 2-3 itérations ligne par ligne :
+| Colonne i | xᵢ | f(xᵢ) | Ordre 1 | Ordre 2 | Ordre 3 | ... |
+|---|---|---|---|---|---|---|
+| 0 | x₀ | y₀ | | | | |
+| | | | DD1[0] = (y₁-y₀)/(x₁-x₀) | | | |
+| 1 | x₁ | y₁ | | DD2[0] = ... | | |
+| | | | DD1[1] = (y₂-y₁)/(x₂-x₁) | | DD3[0] = ... | |
+| 2 | x₂ | y₂ | | DD2[1] = ... | | |
+| ... | ... | ... | ... | ... | ... | |"
+
+ÉTAPE 3 : Détail des calculs intermédiaires
+"Détail des calculs intermédiaires :
+
+DD1[0] = (y₁ - y₀)/(x₁ - x₀) = (...-...)/(...-...) = .../... = ...
+DD1[1] = (y₂ - y₁)/(x₂ - x₁) = (...-...)/(...-...) = .../... = ...
+DD1[2] = ...
+
+DD2[0] = (DD1[1] - DD1[0])/(x₂ - x₀) = (...-...)/(...-...) = .../... = ...
+DD2[1] = (DD1[2] - DD1[1])/(x₃ - x₁) = (...-...)/(...-...) = .../... = ...
+
+DD3[0] = (DD2[1] - DD2[0])/(x₃ - x₀) = (...-...)/(...-...) = .../... = ..."
+
+**IMPORTANT** : Si tu fais une erreur de calcul, MONTRE la correction comme dans le corrigé type :
+"Recalculons Ordre 3 correctement :
+Ordre 2 ligne suivante : (...-...)/(x₃-x₁) = .../... = ...
+Ordre 3 : (...-...)/(x₃ - x₀) = ... / ... = ..."
+
+ÉTAPE 4 : Tableau propre
+"Reprenons le tableau propre :
+
+| x | f(x) | DD1 | DD2 | DD3 |
+|---|---|---|---|---|
+| x₀ | y₀ | | | |
+| | | DD1[0] | | |
+| x₁ | y₁ | | DD2[0] | |
+| | | DD1[1] | | DD3[0] |
+| x₂ | y₂ | | DD2[1] | |
+| | | DD1[2] | | |
+| x₃ | y₃ | | | |"
+
+ÉTAPE 5 : Coefficients du polynôme
+"Coefficients du polynôme (diagonale supérieure) :
+a₀ = y₀ = ...
+a₁ = DD1[0] = ...
+a₂ = DD2[0] = ...
+a₃ = DD3[0] = ...
+
+Polynôme sous forme de Newton :
+P(x) = a₀ + a₁(x - x₀) + a₂(x - x₀)(x - x₁) + a₃(x - x₀)(x - x₁)(x - x₂)
+P(x) = ... + ...(x - ...) + ...(x - ...)(x - ...) + ...(x - ...)(x - ...)(x - ...)"
+
+---
+
+STRUCTURE OBLIGATOIRE POUR ERREUR D'INTERPOLATION
+
+Question : "Calculer l'erreur d'interpolation aux points x = ... et x = ..."
+
+ÉTAPE 1 : Objectif
+"Objectif : Calculer l'erreur e(x) = |f(x) - P(x)| pour x = ... et x = ..."
+
+ÉTAPE 2 : Pour CHAQUE point
+"Point A : x = ... = ... (décimal)
+
+Valeur exacte :
+f(...) = ... / ... = ... / (...) = ... ≈ ... (4 décimales)
+
+Valeur approchée P(...) avec la forme de Newton :
+Terme 0 : a₀ = ...
+Terme 1 : a₁(x - x₀) = ...(...-...) = ...(...)  = ...
+Terme 2 : a₂(x - x₀)(x - x₁) = ...(...-...)(...-...) = ...(...)(...)  = ...
+Terme 3 : a₃(x - x₀)(x - x₁)(x - x₂) = ...(...-...)(...-...)(...-...) = ...(...)(...)(...) = ...
+
+Somme P(...) = ... + ... + ... + ... = ...
+
+Erreur absolue :
+e(...) = |f(...) - P(...)| = |... - ...| = |...|
+e(...) = ... (ou mise au même dénominateur : |.../... - .../...| = |.../...|)
+e(...) ≈ ... (4 décimales)"
+
+ÉTAPE 3 : Tableau récapitulatif
+"Tableau récapitulatif :
+
+| x | f(x) | P(x) | Erreur Absolue |
+|---|---|---|---|
+| ... | ... | ... | ... |
+| ... | ... | ... | ... |
+
+Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
+
+---
+
+STRUCTURE OBLIGATOIRE POUR CONCLUSION
+
+Question : "Conclure."
+
+"[Titre de la section] : [Nom de la méthode] donne ici des résultats de qualité [très inégale / satisfaisante / ...].
+
+Analyse des erreurs :
+- Au point x = ..., l'erreur relative est d'environ ...% (.../...). Le point se situe [description de la position].
+- Au point x = ..., l'erreur relative est [énorme/faible], environ ...% (.../...). Le point se situe [description].
+[Si pertinent] De plus, P(...) = ... est [supérieur/inférieur] à P(...) = ..., créant une [bosse artificielle/comportement inattendu] alors que la fonction f(x) = ... est strictement [décroissante/croissante/...].
+
+Conclusion :
+[Explication physique/mathématique du comportement observé]
+Pour améliorer le résultat, il faudrait [propositions concrètes]."
+
+---
+
+2. EDO - MÉTHODES NUMÉRIQUES
+
+STRUCTURE OBLIGATOIRE POUR TOUTE MÉTHODE ITÉRATIVE
+
+ÉTAPE 1 : Écrire le schéma
+"Schéma de la méthode [Nom] :
+[Formules explicites]"
+
+ÉTAPE 2 : Tableau complet
+"Tableau des itérations :
+
+| n | tₙ | [Colonnes intermédiaires] | wₙ | y(tₙ) exact | Erreur |y-w| |
+|---|---|---|---|---|---|
+| 0 | ... | ... | ... (CI) | ... | 0.0000 |
+| 1 | ... | ... | ... | ... | ... |
+| ... | ... | ... | ... | ... | ... |"
+
+ÉTAPE 3 : Détail de 2-3 itérations
+"Détail des premières itérations :
 
 Itération n=0 :
-- Donnée : t₀ = 0, w₀ = 2 (condition initiale)
-- Calcul : sin(t₀) = sin(0) = 0
-- f(t₀,w₀) = 2 × sin(0) + sin(0) = 0
-- w₁ = w₀ + h × f(t₀,w₀) = 2 + 0.1 × 0 = 2.0
+- Donnée : t₀ = ..., w₀ = ... (condition initiale)
+- [Calculs intermédiaires ligne par ligne]
+- w₁ = w₀ + ... = ... + ... = ...
 
 Itération n=1 :
-- t₁ = t₀ + h = 0 + 0.1 = 0.1
-- sin(t₁) = sin(0.1) = 0.09983 (calculatrice)
-- f(t₁,w₁) = 2 × 0.09983 + 0.09983 = 0.2995
-- w₂ = w₁ + h × f(t₁,w₁) = 2.0 + 0.1 × 0.2995 = 2.02995
+- t₁ = t₀ + h = ... + ... = ...
+- [Calculs intermédiaires ligne par ligne]
+- w₂ = w₁ + ... = ... + ... = ...
 
----
+[...]"
 
-A) MÉTHODE D'EULER
-
-Formule :
-tₙ = t₀ + n × h
-w₀ = y₀
-wₙ₊₁ = wₙ + h × f(tₙ, wₙ)
-
-Ordre : Erreur globale O(h)
-
----
-
-B) MÉTHODE DE TAYLOR D'ORDRE 2
-
-Calcul des dérivées partielles OBLIGATOIRE :
-
-fₜ = ∂f/∂t = ... (montrer le calcul)
-fᵧ = ∂f/∂y = ... (montrer le calcul)
-
-Formule :
-wₙ₊₁ = wₙ + h × f(tₙ,wₙ) + (h²/2) × [fₜ + fᵧ × f]
-
-Ordre : Erreur globale O(h²)
-
----
-
-C) RUNGE-KUTTA D'ORDRE 2 (Heun)
-
-Formule :
-wₙ₊₁ = wₙ + (h/2) × [f(tₙ,wₙ) + f(tₙ₊₁, wₙ + h × f(tₙ,wₙ))]
-
-Ordre : Erreur globale O(h²)
-
----
-
-D) RUNGE-KUTTA D'ORDRE 4 (RK4)
-
-Formule :
-k₁ = h × f(tₙ, wₙ)
-k₂ = h × f(tₙ + h/2, wₙ + k₁/2)
-k₃ = h × f(tₙ + h/2, wₙ + k₂/2)
-k₄ = h × f(tₙ + h, wₙ + k₃)
-wₙ₊₁ = wₙ + (k₁ + 2k₂ + 2k₃ + k₄)/6
-
-Créer une colonne pour CHAQUE kᵢ dans le tableau :
-
-| n | tₙ | k₁ | k₂ | k₃ | k₄ | wₙ₊₁ | y(tₙ) | Erreur |
-|---|----|----|----|----|----|----- |-------|--------|
-
-Ordre : Erreur globale O(h⁴)
-
----
-
-3. COMPARAISON DES MÉTHODES
-
-Créer un tableau récapitulatif :
-
-| Méthode | Ordre | Erreur à t=1 | Temps de calcul |
-|---------|-------|--------------|-----------------|
-| Euler | O(h) | 0.1826 | Rapide |
-| Taylor 2 | O(h²) | 0.0078 | Moyen |
-| RK4 | O(h⁴) | 0.00004 | Plus lent |
-
----
-
-EXEMPLE COMPLET (à suivre comme modèle)
-
-Voir Corrigé CC1_2024.pdf pages avec tableaux complets.
+ÉTAPE 4 : Conclusion
+"Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
 
 ---
 
 ERREURS FRÉQUENTES À ÉVITER
 
-- Ne pas créer de tableau pour les itérations
-- Oublier les dérivées partielles pour Taylor
-- Ne pas montrer les calculs intermédiaires de k₁, k₂, k₃, k₄
-- Oublier la vérification de la solution exacte
-- Ne pas calculer les erreurs |y(tₙ) - wₙ|
+- Ne pas suivre la structure Objectif → Données → Formule → Calculs → Conclusion
+- Sauter des lignes de calcul intermédiaire
+- Ne pas montrer les corrections d'erreurs (comme dans le corrigé type)
+- Oublier le tableau récapitulatif final
+- Ne pas détailler CHAQUE terme de l'évaluation du polynôme
 - Utiliser du LaTeX ou des * (interdit)
