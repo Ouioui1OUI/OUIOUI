@@ -1,241 +1,431 @@
-STATISTIQUES - Prompt Spécialisé
+STATISTIQUES - Prompt Spécialisé v2
 
 RAPPEL FORMAT : Do not use any * or latex, use Unicode. Do not bold text.
 
-Exemples de formules correctes :
-- Y = β₀ + β₁X + ε
-- β₁ = Σ(xᵢ-x̄)(yᵢ-ȳ) / Σ(xᵢ-x̄)²
-- R² = SCE/SCT = 0.883
-- t = β₁/(s/√Σ(xᵢ-x̄)²)
-- F = [SCE/(p-1)] / [SCR/(n-p)]
-- χ² = Σ(Oᵢ-Eᵢ)²/Eᵢ
+DOCUMENTS DE RÉFÉRENCE (Dépôt GitHub)
+- Examen : subjects/statistiques/Examen Statistiques ALT A3_2025.pdf
+- Corrigé type : subjects/statistiques/corrigé exam Stat A3 - 2025.pdf
+- Cours RLS : subjects/statistiques/Chapitre 3 - RLS-Cmo.pdf
+- Cours RLM : subjects/statistiques/Chapitre 4 _RLM-Cmo.pdf
+- Cours Stat Inf : subjects/statistiques/SDD- stat inf- 2025.pdf
 
-DOCUMENTS DE RÉFÉRENCE
-- Régression linéaire simple : Chapitre 3 - RLS-Cmo.pdf
-- Régression linéaire multiple : Chapitre 4 _RLM-Cmo.pdf
-- Statistiques inférentielles : SDD- stat inf- 2025.pdf
+**RÈGLE ABSOLUE** : Suis la structure des corrigés types PDF à la lettre.
 
 ---
 
-MÉTHODOLOGIE DÉTAILLÉE
+1. TESTS D'HYPOTHÈSES
 
-1. RÉGRESSION LINÉAIRE SIMPLE : Y = β₀ + β₁X + ε
+STRUCTURE OBLIGATOIRE POUR TEST SUR UNE MOYENNE
 
-ÉTAPE 1 : TABLEAU DES DONNÉES
+Exemple : "Peut-on conclure avec un risque de ... que ... ?"
 
-TABLEAU OBLIGATOIRE :
+ÉTAPE 1 : Reformuler la question
+"On cherche à tester si le volume moyen des bouteilles est différent de 1 litre au seuil α = 4%."
 
-| i | xᵢ | yᵢ | xᵢ-x̄ | yᵢ-ȳ | (xᵢ-x̄)(yᵢ-ȳ) | (xᵢ-x̄)² | (yᵢ-ȳ)² |
-|---|----|----|------|------|---------------|---------|---------|
-| 1 | ... | ... | ... | ... | ... | ... | ... |
-| 2 | ... | ... | ... | ... | ... | ... | ... |
-| ... | ... | ... | ... | ... | ... | ... | ... |
-| Σ | Σxᵢ | Σyᵢ | 0 | 0 | Σ(xᵢ-x̄)(yᵢ-ȳ) | Σ(xᵢ-x̄)² | Σ(yᵢ-ȳ)² |
+ÉTAPE 2 : Hypothèses
+"Hypothèses :
+H₀ : μ = μ₀ (le volume moyen est de 1 litre)
+H₁ : μ ≠ μ₀ (le volume moyen est différent de 1 litre)
 
-Calculs préliminaires DÉTAILLÉS :
+Test bilatéral au seuil α = ...%"
 
-Exemple pour i=1 :
-x₁ = ... , y₁ = ...
-x̄ = Σxᵢ/n = (...+...+...)/n = .../n = ...
-ȳ = Σyᵢ/n = (...+...+...)/n = .../n = ...
+ÉTAPE 3 : Données
+"Données :
+- Taille échantillon : n = ...
+- Moyenne échantillon : x̄ = ...
+- Écart-type population : σ = ... (connu)
+- Moyenne théorique : μ₀ = ..."
 
-x₁-x̄ = ... - ... = ...
-y₁-ȳ = ... - ... = ...
-(x₁-x̄)(y₁-ȳ) = ... × ... = ...
-(x₁-x̄)² = (...)² = ...
-(y₁-ȳ)² = (...)² = ...
+ÉTAPE 4 : Statistique de test
+"Statistique de test :
+Comme σ est connu et n ≥ 30 [ou n < 30 mais distribution normale], on utilise la loi normale :
+Z = (x̄ - μ₀) / (σ/√n)
 
----
+Calcul :
+Z = (... - ...) / (.../√...)
+Z = ... / (.../...)
+Z = ... / ...
+Z = ..."
 
-ÉTAPE 2 : ESTIMATION DES PARAMÈTRES
+ÉTAPE 5 : Valeur critique
+"Valeur critique :
+Pour un test bilatéral au seuil α = ...%, on cherche z_α/2 tel que P(|Z| > z_α/2) = α
 
-a) Calcul de β₁ :
-β₁ = Σ(xᵢ-x̄)(yᵢ-ȳ) / Σ(xᵢ-x̄)²
-β₁ = ... / ... = ...
+α = ...% = ...
+α/2 = .../2 = ...
 
-Interprétation : "Quand X augmente de 1 unité, Y augmente en moyenne de β₁ = ... unités"
+Table normale : z_α/2 = z_... = ...
+[OU] Avec Excel : =LOI.NORMALE.STANDARD.INVERSE(1-α/2) = ..."
 
-b) Calcul de β₀ :
-β₀ = ȳ - β₁ × x̄
-β₀ = ... - ... × ... = ...
+ÉTAPE 6 : Règle de décision
+"Règle de décision :
+- Si |Z_obs| > z_α/2 : on rejette H₀
+- Si |Z_obs| ≤ z_α/2 : on ne rejette pas H₀
 
-Interprétation : "Quand X = 0, Y vaut en moyenne β₀ = ..."
+Comparaison :
+|Z_obs| = |...| = ...
+z_α/2 = ...
 
-c) Équation de régression :
-ŷ = β₀ + β₁ × x = ... + ... × x
+|...| [> ou ≤] ... : on [rejette / ne rejette pas] H₀"
 
----
+ÉTAPE 7 : Conclusion
+"Conclusion :
+Au seuil de risque α = ...%, on [peut / ne peut pas] conclure que le volume moyen des bouteilles est différent de ... litre.
+[Explication en contexte]"
 
-ÉTAPE 3 : QUALITÉ DE L'AJUSTEMENT (R²)
+ÉTAPE 8 : P-value (si demandée)
+"Calcul de la p-value :
+p-value = 2 × P(Z > |Z_obs|) (test bilatéral)
+p-value = 2 × P(Z > ...)
+p-value = 2 × (1 - Φ(...))
+p-value = 2 × (1 - ...)
+p-value = 2 × ...
+p-value = ... = ...%
 
-a) Sommes des carrés :
-SCT (totale) = Σ(yᵢ-ȳ)² = ... (du tableau)
-SCE (expliquée) = β₁² × Σ(xᵢ-x̄)² = (...)² × ... = ...
-SCR (résiduelle) = SCT - SCE = ... - ... = ...
+Interprétation :
+- Si p-value < α : on rejette H₀
+- Si p-value ≥ α : on ne rejette pas H₀
 
-b) Coefficient de détermination :
-R² = SCE/SCT = .../... = ... = ...%
+... [< ou ≥] ... : on [rejette / ne rejette pas] H₀
 
-INTERPRÉTATION : "Le modèle explique ...% de la variance de Y"
-
-c) Variance résiduelle :
-s² = SCR/(n-2) = .../... = ...
-s = √s² = √... = ...
-
----
-
-ÉTAPE 4 : TEST DE SIGNIFICATION DE β₁
-
-H₀ : β₁ = 0 vs H₁ : β₁ ≠ 0
-
-TABLEAU OBLIGATOIRE :
-
-| Élément | Valeur | Calcul détaillé |
-|---------|--------|-----------------|
-| β₁ estimé | ... | Σ(xᵢ-x̄)(yᵢ-ȳ)/Σ(xᵢ-x̄)² |
-| s | ... | √[SCR/(n-2)] |
-| Erreur std de β₁ | ... | s/√Σ(xᵢ-x̄)² = .../√... |
-| t observé | ... | β₁/(s/√Σ(xᵢ-x̄)²) = ... |
-| ddl | n-2 = ... | |
-| t critique | ... | Table Student (α=0.05, n-2 ddl) |
-| p-value | ... | P(|T| > |t_obs|) |
-| Décision | ... | Si |t_obs| > t_crit → Rejet H₀ |
-
-CONCLUSION : "Au seuil α=5%, on [rejette/ne rejette pas] H₀. β₁ est [significatif/non significatif]"
+À partir du seuil α = ...%, on peut conclure que la prétention est fausse."
 
 ---
 
-ÉTAPE 5 : INTERVALLE DE CONFIANCE À 95% POUR β₁
+2. RÉGRESSION LINÉAIRE SIMPLE
 
-IC₉₅%(β₁) = β₁ ± t₀.₀₂₅,ₙ₋₂ × (s/√Σ(xᵢ-x̄)²)
-IC₉₅%(β₁) = ... ± ... × ...
-IC₉₅%(β₁) = [... ; ...]
+STRUCTURE OBLIGATOIRE
 
-INTERPRÉTATION : "Avec 95% de confiance, β₁ ∈ [... ; ...]"
+Question : "Calculer les coefficients de la droite de régression linéaire"
 
----
+ÉTAPE 1 : Modèle
+"Modèle de régression linéaire simple :
+yᵢ = β₀ + β₁xᵢ + εᵢ"
 
-2. RÉGRESSION LINÉAIRE MULTIPLE : Y = β₀ + β₁X₁ + β₂X₂ + ... + ε
+ÉTAPE 2 : Hypothèses (si demandées)
+"Hypothèses sur le terme d'erreur εᵢ :
+1. E(εᵢ) = 0 : les erreurs sont d'espérance nulle
+2. Var(εᵢ) = σ² : les erreurs ont une variance constante (homoscédasticité)
+3. Cov(εᵢ, εⱼ) = 0 pour i ≠ j : les erreurs sont non corrélées
+4. [Si normalité requise] εᵢ ~ N(0, σ²) : les erreurs suivent une loi normale"
 
-NOTATION MATRICIELLE OBLIGATOIRE
+ÉTAPE 3 : Données fournies
+"Données fournies :
+- Nombre d'observations : n = ...
+- Moyennes : x̄ = ..., ȳ = ...
+- Somme des carrés : Σ(xᵢ - x̄)² = ...
+- Somme des carrés : Σ(yᵢ - ȳ)² = ...
+- Somme des produits croisés : Σ(xᵢ - x̄)(yᵢ - ȳ) = ..."
 
-Matrices de données :
+ÉTAPE 4 : Calcul de β₁
+"Calcul de β₁ (estimateur des moindres carrés) :
 
-Matrice Y (n lignes × 1 colonne) :
-Y = [y₁, y₂, ..., yₙ]' (transposée)
+Formule :
+β̂₁ = Σ(xᵢ - x̄)(yᵢ - ȳ) / Σ(xᵢ - x̄)²
 
-Matrice X (n lignes × p colonnes) :
-- Colonne 1 : des 1 (pour l'intercept β₀)
-- Colonne 2 : variable X₁
-- Colonne 3 : variable X₂
-- etc.
+Calcul :
+β̂₁ = ... / ...
+β̂₁ = ...
 
-Exemple pour n=10, p=3 :
+Interprétation : Quand [nom variable X] augmente de 1 unité, [nom variable Y] [augmente/diminue] en moyenne de |β̂₁| = ... unités."
 
-| Ligne | Constante | X₁ (Revenu) | X₂ (Température) |
-|-------|-----------|-------------|------------------|
-| 1 | 1 | 35 | 6 |
-| 2 | 1 | 30 | 9 |
-| ... | ... | ... | ... |
-| 10 | 1 | 25 | 8 |
+ÉTAPE 5 : Calcul de β₀
+"Calcul de β₀ (estimateur des moindres carrés) :
 
-Vecteur β (p lignes × 1 colonne) :
-β = [β₀, β₁, β₂, ...]'
+Formule :
+β̂₀ = ȳ - β̂₁ × x̄
 
-a) Calcul de X'X :
-X'X = matrice (p × p)
-X'X[1,1] = 1×1 + 1×1 + ... = n
-X'X[1,2] = 1×x₁₁ + 1×x₂₁ + ... = Σx₁ᵢ
-...
-Montrer CHAQUE multiplication
+Calcul :
+β̂₀ = ... - (...) × (...)
+β̂₀ = ... - ...
+β̂₀ = ...
 
-b) Calcul de (X'X)⁻¹ :
-Méthode : déterminant + comatrice
-det(X'X) = ...
-Cofacteurs : ...
-(X'X)⁻¹ = ...
+Interprétation : Quand [nom variable X] = 0, [nom variable Y] vaut en moyenne β̂₀ = ... [si pertinent dans le contexte]."
 
-c) Calcul de X'Y :
-X'Y = [Σyᵢ, Σx₁ᵢ×yᵢ, Σx₂ᵢ×yᵢ, ...]'
-
-d) Estimation β̂ :
-β̂ = (X'X)⁻¹ × X'Y = [...] × [...] = [β₀, β₁, β₂, ...]'
-
----
-
-TEST F GLOBAL
-
-H₀ : β₁ = β₂ = ... = βₚ = 0
-
-TABLEAU ANOVA OBLIGATOIRE :
-
-| Source | SC | ddl | CM | F | F_critique | Décision |
-|--------|----|----|-----|---|------------|----------|
-| Régression | SCE = ... | p-1 | CME = SCE/(p-1) = ... | F = CME/CMR = ... | ... | ... |
-| Résiduelle | SCR = ... | n-p | CMR = SCR/(n-p) = ... | | | |
-| Totale | SCT = ... | n-1 | | | | |
-
-Calculs détaillés :
-SCE = Σ(ŷᵢ-ȳ)² = ...
-SCR = Σ(yᵢ-ŷᵢ)² = ...
-SCT = Σ(yᵢ-ȳ)² = ...
-Vérification : SCT = SCE + SCR ✓
-
-F = [SCE/(p-1)] / [SCR/(n-p)] = ... / ... = ...
-F_critique = F(α=0.05, p-1, n-p) = ... (table)
-
-CONCLUSION : "Si F > F_critique → au moins un βⱼ ≠ 0"
+ÉTAPE 6 : Modèle estimé
+"Expression du modèle estimé :
+ŷ = β̂₀ + β̂₁ × x
+ŷ = ... + (...) × x
+ŷ = ... + ... x [ou] ŷ = ... - ... x (si β̂₁ < 0)"
 
 ---
 
-3. TESTS D'HYPOTHÈSES
+ÉTAPE 7 : SCE (si demandée)
+"Expression de la SCE en fonction de β̂₁ et Σ(xᵢ - x̄)² :
 
-A) TEST SUR UNE MOYENNE (Student)
+SCE = Σ(ŷᵢ - ȳ)²
+Or, ŷᵢ = β̂₀ + β̂₁xᵢ et β̂₀ = ȳ - β̂₁x̄
+Donc : ŷᵢ - ȳ = (β̂₀ + β̂₁xᵢ) - ȳ
+                = (ȳ - β̂₁x̄ + β̂₁xᵢ) - ȳ
+                = β̂₁(xᵢ - x̄)
 
-H₀ : μ = μ₀
+Par conséquent :
+SCE = Σ[β̂₁(xᵢ - x̄)]²
+SCE = β̂₁² × Σ(xᵢ - x̄)²
 
-TABLEAU OBLIGATOIRE :
+Calcul :
+SCE = (...)² × ...
+SCE = ... × ...
+SCE = ..."
 
-| Étape | Calcul | Valeur |
-|-------|--------|--------|
-| Moyenne échantillon | x̄ = Σxᵢ/n | ... |
-| Écart-type | s = √[Σ(xᵢ-x̄)²/(n-1)] | ... |
-| Erreur standard | SE = s/√n | ... |
-| t observé | t = (x̄-μ₀)/SE | ... |
-| ddl | n-1 | ... |
-| t critique | Table Student (α, n-1) | ... |
-| Décision | |t| > t_crit ? | Rejet/Acceptation |
+ÉTAPE 8 : Coefficient R² (si demandé)
+"Calcul du coefficient de détermination R² :
+
+Formule :
+R² = SCE / SCT
+
+Avec :
+SCT = Σ(yᵢ - ȳ)² = ... (donné)
+SCE = β̂₁² × Σ(xᵢ - x̄)² = ... (calculé ci-dessus)
+
+Calcul :
+R² = ... / ...
+R² = ... = ...% (en pourcentage)
+
+Interprétation : 
+Le modèle explique ...% de la variance de [nom variable Y].
+[Si R² > 0.7] La qualité de l'ajustement est [bonne/moyenne/faible].
+[Explication contextualisée]"
 
 ---
 
-B) TEST DU CHI² (Ajustement/Indépendance)
+3. RÉGRESSION LINÉAIRE MULTIPLE (Sortie R)
 
-TABLEAU OBLIGATOIRE :
+STRUCTURE OBLIGATOIRE
 
-| Modalité | Observé Oᵢ | Théorique Eᵢ | (Oᵢ-Eᵢ)² | (Oᵢ-Eᵢ)²/Eᵢ |
-|----------|------------|--------------|----------|-------------|
-| 1 | ... | ... | ... | ... |
-| 2 | ... | ... | ... | ... |
-| Total | Σ Oᵢ = n | Σ Eᵢ = n | - | χ² = Σ(Oᵢ-Eᵢ)²/Eᵢ = ... |
+Question : "Exprimer l'équation de la droite de régression linéaire multiple"
 
-Calculs détaillés pour chaque ligne :
-Ligne 1 : 
-Eᵢ = n × pᵢ = ... × ... = ...
-(Oᵢ-Eᵢ)² = (...-...)² = ...
-(Oᵢ-Eᵢ)²/Eᵢ = .../... = ...
+ÉTAPE 1 : Lecture du tableau
+"D'après la sortie R fournie, on lit les coefficients estimés :
+- Intercept (β₀) : ...
+- Coefficient de X₁ (β₁) : ...
+- Coefficient de X₂ (β₂) : ...
+- Coefficient de X₃ (β₃) : ..."
 
-Décision :
-ddl = k - 1 - nombre de paramètres estimés = ...
-χ²_critique (α=0.05, ddl) = ... (table)
-Si χ²_obs > χ²_crit → Rejet H₀
+ÉTAPE 2 : Équation
+"Équation de la droite de régression linéaire multiple :
+Ŷ = β₀ + β₁X₁ + β₂X₂ + β₃X₃
+Ŷ = ... + (...)X₁ + (...)X₂ + (...)X₃
+Ŷ = ... + ...X₁ + ...X₂ + ...X₃ [simplifier les signes]"
+
+---
+
+Question : "Prévoir [la variable Y] pour [valeurs de X₁, X₂, X₃]"
+
+ÉTAPE 1 : Substitution
+"On utilise l'équation estimée avec :
+- X₁ = ...
+- X₂ = ...
+- X₃ = ...
+
+Ŷ = ... + (...)×(...) + (...)×(...) + (...)×(...)
+Ŷ = ... + ... + ... + ...
+Ŷ = ... unités
+
+Interprétation : Pour [contexte], on prévoit en moyenne [valeur] [unité]."
+
+---
+
+Question : "Calculer l'intervalle de confiance de β₁ à un niveau de ...%"
+
+ÉTAPE 1 : Données
+"D'après la sortie R :
+- Coefficient estimé : β̂₁ = ...
+- Erreur standard : SE(β̂₁) = ... (colonne Std. Error)
+- Nombre d'observations : n = ...
+- Nombre de paramètres : p = ... (nombre de coefficients β)
+- Degrés de liberté : ddl = n - p = ... - ... = ..."
+
+ÉTAPE 2 : Valeur critique
+"Niveau de confiance : 1 - α = ...% ⇒ α = ...% = ...
+Test bilatéral : α/2 = .../2 = ...
+
+Valeur critique de Student :
+t_α/2,ddl = t_...,... = ... (table de Student)
+[OU] Avec R : qt(1-α/2, ddl) = qt(..., ...) = ..."
+
+ÉTAPE 3 : Intervalle
+"Intervalle de confiance à ...% :
+IC_...%(β₁) = β̂₁ ± t_α/2,ddl × SE(β̂₁)
+IC_...%(β₁) = ... ± ... × ...
+IC_...%(β₁) = ... ± ...
+IC_...%(β₁) = [... - ... ; ... + ...]
+IC_...%(β₁) = [... ; ...]
+
+Interprétation : Avec ...% de confiance, le coefficient β₁ se situe entre ... et ...
+[Contexte : quand X₁ augmente de 1 unité, Y augmente en moyenne entre ... et ... unités]."
+
+---
+
+Question : "Tester la nullité du coefficient β₃ avec un risque d'erreur de ...%"
+
+ÉTAPE 1 : Hypothèses
+"Test de significativité de β₃ :
+H₀ : β₃ = 0 (la variable X₃ n'a pas d'effet significatif sur Y)
+H₁ : β₃ ≠ 0 (la variable X₃ a un effet significatif sur Y)
+
+Seuil : α = ...% = ..."
+
+ÉTAPE 2 : Données
+"D'après la sortie R :
+- Coefficient estimé : β̂₃ = ...
+- Erreur standard : SE(β̂₃) = ...
+- Statistique t observée : t_obs = ... (colonne t value)
+- p-value : p = ... (colonne Pr(>|t|))
+- ddl = n - p = ..."
+
+ÉTAPE 3 : Statistique de test (si non fournie)
+"Calcul de la statistique t (si non fournie) :
+t = β̂₃ / SE(β̂₃)
+t = ... / ...
+t = ..."
+
+ÉTAPE 4 : Valeur critique
+"Valeur critique :
+Test bilatéral au seuil α = ...
+t_α/2,ddl = t_...,... = ... (table de Student)"
+
+ÉTAPE 5 : Décision
+"Règle de décision :
+- Si |t_obs| > t_α/2 : on rejette H₀
+- Si |t_obs| ≤ t_α/2 : on ne rejette pas H₀
+
+OU (équivalent) :
+- Si p-value < α : on rejette H₀
+- Si p-value ≥ α : on ne rejette pas H₀
+
+Comparaison :
+|t_obs| = |...| = ...
+t_α/2 = ...
+|...| [> ou ≤] ...
+
+ET/OU :
+p-value = ...
+α = ...
+... [< ou ≥] ...
+
+Décision : On [rejette / ne rejette pas] H₀"
+
+ÉTAPE 6 : Conclusion
+"Conclusion :
+Au seuil α = ...%, on [peut / ne peut pas] conclure que le coefficient β₃ est [significativement différent de zéro / non significatif].
+[Contexte : la variable X₃ [a / n'a pas] d'effet significatif sur Y]."
+
+---
+
+Question : "Interpréter la valeur ..."
+
+"La valeur ... correspond à [identifier dans la sortie R] :
+[Si R²] Le coefficient de détermination R² = Multiple R-squared = ...
+[Si Adjusted R²] Le coefficient de détermination ajusté R²_adj = Adjusted R-squared = ...
+[Si F-statistic] La statistique F du test global = F-statistic = ...
+[Si p-value] La p-value du test = Pr(>|t|) = ...
+
+Interprétation :
+[Si R²] Le modèle explique ...% de la variance de Y. Les X₁, X₂, X₃ expliquent ...% de la variabilité observée dans Y.
+[Si F] Le test F global teste si au moins un coefficient β est non nul. Voir test global ci-dessous."
+
+---
+
+Question : "Que signifie 'Residual standard error'. En déduire SCR, SCT, SCE."
+
+ÉTAPE 1 : Définition
+"Le 'Residual standard error' (erreur résiduelle standard) est l'écart-type résiduel s :
+
+s = √[SCR / (n - p)]
+
+D'après la sortie R :
+s = ... (valeur fournie)
+n = ... (nombre d'observations)
+p = ... (nombre de coefficients β)
+ddl = n - p = ..."
+
+ÉTAPE 2 : SCR
+"Calcul de la SCR (Somme des Carrés Résiduels) :
+s² = SCR / (n - p)
+SCR = s² × (n - p)
+SCR = (...)² × (...)
+SCR = ... × ...
+SCR = ..."
+
+ÉTAPE 3 : SCT et SCE
+"D'après le coefficient R² :
+R² = SCE / SCT = ...
+Donc : SCE = R² × SCT
+
+Aussi : SCT = SCE + SCR
+Donc : SCT = SCE + ...
+
+Et : SCE = R² × SCT
+Donc : SCT = SCE + SCR
+       SCT = R² × SCT + SCR
+       SCT × (1 - R²) = SCR
+       SCT = SCR / (1 - R²)
+
+Calcul :
+SCT = ... / (1 - ...)
+SCT = ... / ...
+SCT = ...
+
+SCE = SCT - SCR
+SCE = ... - ...
+SCE = ...
+
+Vérification :
+R² = SCE / SCT = ... / ... = ... ✓"
+
+---
+
+Question : "Tester la significativité globale du modèle au risque ...%"
+
+ÉTAPE 1 : Hypothèses
+"Test F global :
+H₀ : β₁ = β₂ = ... = βₚ₋₁ = 0 (le modèle n'est pas significatif)
+H₁ : au moins un βⱼ ≠ 0 (le modèle est significatif)
+
+Seuil : α = ...% = ..."
+
+ÉTAPE 2 : Statistique F
+"D'après la sortie R :
+F-statistic = ... on ... and ... DF
+⇒ F_obs = ... avec ddl₁ = p-1 = ... et ddl₂ = n-p = ...
+p-value = ... (si fournie)"
+
+ÉTAPE 3 : Valeur critique
+"Valeur critique :
+F_α,ddl₁,ddl₂ = F_...,..,,... = ... (table de Fisher-Snedecor)
+[OU] Avec R : qf(1-α, ddl₁, ddl₂) = ..."
+
+ÉTAPE 4 : Décision
+"Règle de décision :
+- Si F_obs > F_critique : on rejette H₀
+- Si F_obs ≤ F_critique : on ne rejette pas H₀
+
+Comparaison :
+F_obs = ...
+F_critique = ...
+... [> ou ≤] ...
+
+OU (p-value) :
+p-value = ...
+α = ...
+... [< ou ≥] ...
+
+Décision : On [rejette / ne rejette pas] H₀"
+
+ÉTAPE 5 : Conclusion
+"Conclusion :
+Au seuil α = ...%, le modèle est [globalement significatif / non significatif].
+Au moins un des coefficients β₁, β₂, ... est [significativement différent de zéro / non significatif].
+Les variables explicatives [ont / n'ont pas] collectivement un effet significatif sur Y."
 
 ---
 
 ERREURS FRÉQUENTES À ÉVITER
 
-- Oublier le tableau de calculs préliminaires
-- Ne pas interpréter R²
-- Confondre SCE et SCR
-- Oublier les ddl dans les tests
-- Ne pas vérifier SCT = SCE + SCR
+- Oublier de distinguer test bilatéral/unilatéral
+- Confondre α et α/2
+- Ne pas interpréter les résultats en contexte
+- Oublier les unités dans les interprétations
+- Ne pas vérifier R² = SCE/SCT
 - Utiliser du LaTeX ou des * (interdit)
