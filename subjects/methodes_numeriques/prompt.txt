@@ -1,512 +1,312 @@
-MÉTHODES NUMÉRIQUES - Prompt Spécialisé v2
-
+MÉTHODES NUMÉRIQUES - Prompt Spécialisé v3
 RAPPEL FORMAT : Do not use any * or latex, use Unicode. Do not bold text.
-
 DOCUMENTS DE RÉFÉRENCE (Dépôt GitHub)
-- Corrigé type OBLIGATOIRE : subjects/methodes_numeriques/Corrigé Examen 2025.pdf
-- Examen : subjects/methodes_numeriques/Examen_2025.pdf
-- Cours : subjects/methodes_numeriques/COURS_Méthodes_numériques.pdf
 
-**RÈGLE ABSOLUE** : N'utilise QUE les méthodes enseignées dans le cours. Si une méthode n'apparaît pas dans les documents du cours, NE L'UTILISE PAS.
+Corrigé type OBLIGATOIRE : subjects/methodes_numeriques/Corrigé Examen 2025.pdf
+Examen : subjects/methodes_numeriques/Examen_2025.pdf
+Cours : subjects/methodes_numeriques/COURS_Méthodes_numériques.pdf
+ subjects/methodes_numeriques/Chap 4.pdf
 
-**MÉTHODES AUTORISÉES** (vérifiées dans le cours) :
-- Interpolation : Lagrange, Newton (différences divisées)
-- EDO : Euler, Taylor (ordre 2), Runge-Kutta (ordre 2 et 4), Adams-Bashforth
-- Intégration numérique : Méthode des TRAPÈZES (pas Simpson)
-- Méthodes Prédicteur-Correcteur
+RÈGLE ABSOLUE : Suis EXACTEMENT la méthodologie du corrigé type fourni.
+N'utilise QUE les méthodes enseignées dans le cours. Si une méthode n'apparaît pas dans les documents du cours, NE L'UTILISE PAS.
 
-**MÉTHODES INTERDITES** (non enseignées) :
-- Simpson (1/3 ou 3/8)
-- Point milieu
-- Romberg
-- Autres méthodes non mentionnées dans le cours
+INTERPOLATION POLYNOMIALE - LAGRANGE
 
----
-
-1. INTERPOLATION POLYNOMIALE
-
-STRUCTURE OBLIGATOIRE POUR LAGRANGE
-
+STRUCTURE OBLIGATOIRE (basée sur le corrigé officiel)
 Question : "Déterminer le polynôme d'interpolation de Lagrange passant par les points d'abscisses : ..."
-
 ÉTAPE 1 : Objectif
-"Objectif : Construire le polynôme P(x) qui passe exactement par les points donnés en utilisant la base de Lagrange."
-
+"Objectif : Construire le polynôme P(x) qui passe exactement par les points donnés en utilisant la base de Lagrange, puis déterminer son degré effectif."
 ÉTAPE 2 : Données
 "Données :
-La fonction est f(x) = ...
+La fonction à interpoler est f(x) = ...
 Les points d'interpolation (xᵢ, yᵢ) sont :
-- x₀ = ..., y₀ = f(x₀) = ...
-- x₁ = ..., y₁ = f(x₁) = ...
-- ..."
+
+x₀ = ..., y₀ = f(x₀) = ...
+x₁ = ..., y₁ = f(x₁) = ...
+x₂ = ..., y₂ = f(x₂) = ...
+x₃ = ..., y₃ = f(x₃) = ..."
 
 ÉTAPE 3 : Formule
 "Formule de Lagrange :
 Le polynôme d'interpolation est donné par :
 P(x) = Σ yᵢ Lᵢ(x) pour i allant de 0 à n
 où Lᵢ(x) = Π ((x - xⱼ)/(xᵢ - xⱼ)) pour j ≠ i"
-
 ÉTAPE 4 : Calcul des dénominateurs
 "Calcul des dénominateurs des polynômes de base Lᵢ(x) :
-
 Pour i = 0 (x₀ = ...) :
-D₀ = (x₀ - x₁)(x₀ - x₂)...(x₀ - xₙ)
+D₀ = (x₀ - x₁)(x₀ - x₂)(x₀ - x₃)
 D₀ = (...-...)(...-...)(...-...)
 D₀ = (...) × (...) × (...)
-D₀ = ... = .../... (fraction si possible)
-
+D₀ = ... = .../...
 Pour i = 1 (x₁ = ...) :
-D₁ = (x₁ - x₀)(x₁ - x₂)...(x₁ - xₙ)
+D₁ = (x₁ - x₀)(x₁ - x₂)(x₁ - x₃)
 D₁ = (...-...)(...-...)(...-...)
 D₁ = (...) × (...) × (...)
 D₁ = ... = .../...
-
-[Répéter pour TOUS les points]"
-
-ÉTAPE 5 : Construction du polynôme
-"Construction du polynôme P(x) :
-P(x) = (y₀/D₀)N₀(x) + (y₁/D₁)N₁(x) + ... + (yₙ/Dₙ)Nₙ(x)
-où Nᵢ(x) sont les numérateurs correspondants."
-
-ÉTAPE 6 : Calcul des coefficients
-"Calcul des coefficients Cᵢ = yᵢ/Dᵢ :
+Pour i = 2 (x₂ = ...) :
+D₂ = (x₂ - x₀)(x₂ - x₁)(x₂ - x₃)
+D₂ = (...-...)(...-...)(...-...)
+D₂ = (...) × (...) × (...)
+D₂ = ...
+Pour i = 3 (x₃ = ...) :
+D₃ = (x₃ - x₀)(x₃ - x₁)(x₃ - x₂)
+D₃ = (...-...)(...-...)(...-...)
+D₃ = (...) × (...) × (...)
+D₃ = ..."
+ÉTAPE 5 : Calcul des coefficients pondérés
+"Calcul des coefficients pondérés Cᵢ = yᵢ/Dᵢ :
 C₀ = y₀ / D₀ = ... / (...) = ...
 C₁ = y₁ / D₁ = ... / (...) = ...
-[...]
-
-Expression du polynôme de Lagrange :
-P(x) = C₀(x-x₁)(x-x₂)...(x-xₙ) + C₁(x-x₀)(x-x₂)...(x-xₙ) + ..."
-
-ÉTAPE 7 : Degré du polynôme
-"Degré du polynôme :
-Nous avons n+1 points, donc le degré est au plus n.
+C₂ = y₂ / D₂ = ... / (...) = ...
+C₃ = y₃ / D₃ = ... / (...) = ..."
+ÉTAPE 6 : Expression du polynôme (FORME DÉVELOPPÉE OBLIGATOIRE)
+"Expression du polynôme P(x) :
+P(x) = C₀(x-x₁)(x-x₂)(x-x₃) + C₁(x-x₀)(x-x₂)(x-x₃) + C₂(x-x₀)(x-x₁)(x-x₃) + C₃(x-x₀)(x-x₁)(x-x₂)
+Substitution des valeurs :
+P(x) = (...)(x-...)(x-...)(x-...) + (...)(x-...)(x-...)(x-...) + (...)(x-...)(x-...)(x-...) + (...)(x-...)(x-...)(x-...)
+IMPORTANT : Donner la forme EXPLICITE avec les coefficients numériques :
+P(x) = (-64/21)(x-1)(x-2)(x-4) + (56/21)(x-0.5)(x-2)(x-4) - (14/21)(x-0.5)(x-1)(x-4) + (1/21)(x-0.5)(x-1)(x-2)"
+ÉTAPE 7 : Détermination du degré
+"Détermination du degré :
+Le degré maximal possible est n (car n+1 points).
 Vérifions le coefficient du terme en x^n (somme des Cᵢ) :
-Somme = C₀ + C₁ + ... + Cₙ
-Somme = ... + ... + ...
-Somme = (.....)/... = ...
+Somme = C₀ + C₁ + C₂ + C₃
+Somme = ... + ... + ... + ...
+Somme = (.....)/...
+Somme = ...
+Le coefficient de x^n est ... (non nul / nul).
+Le degré de ce polynôme est ..."
 
-[Si somme ≠ 0] Le coefficient de x^n n'est pas nul.
-Le degré de ce polynôme est n."
 
----
+INTERPOLATION POLYNOMIALE - NEWTON
 
-STRUCTURE OBLIGATOIRE POUR NEWTON
-
+STRUCTURE OBLIGATOIRE (basée sur le corrigé officiel)
 Question : "Retrouver le polynôme d'interpolation par la Méthode de Newton."
-
 ÉTAPE 1 : Objectif
-"Objectif : Utiliser les différences divisées pour écrire P(x) sous la forme de Newton :
-P(x) = a₀ + a₁(x - x₀) + a₂(x - x₀)(x - x₁) + ... + aₙ(x - x₀)(x - x₁)...(x - xₙ₋₁)"
-
-ÉTAPE 2 : Tableau des Différences Divisées
+"Objectif : Calculer le même polynôme en utilisant la forme de Newton et les différences divisées pour vérifier le résultat précédent."
+ÉTAPE 2 : Formule de Newton
+"Formule de Newton :
+P(x) = a₀ + a₁(x - x₀) + a₂(x - x₀)(x - x₁) + a₃(x - x₀)(x - x₁)(x - x₂)
+Les coefficients aᵢ sont les différences divisées f[x₀, ..., xᵢ]."
+ÉTAPE 3 : Tableau des Différences Divisées
 "Tableau des Différences Divisées :
-
-| Colonne i | xᵢ | f(xᵢ) | Ordre 1 | Ordre 2 | Ordre 3 | ... |
-|---|---|---|---|---|---|---|
-| 0 | x₀ | y₀ | | | | |
-| | | | DD1[0] = (y₁-y₀)/(x₁-x₀) | | | |
-| 1 | x₁ | y₁ | | DD2[0] = ... | | |
-| | | | DD1[1] = (y₂-y₁)/(x₂-x₁) | | DD3[0] = ... | |
-| 2 | x₂ | y₂ | | DD2[1] = ... | | |
-| ... | ... | ... | ... | ... | ... | |"
-
-ÉTAPE 3 : Détail des calculs intermédiaires
-"Détail des calculs intermédiaires :
-
-DD1[0] = (y₁ - y₀)/(x₁ - x₀) = (...-...)/(...-...) = .../... = ...
-DD1[1] = (y₂ - y₁)/(x₂ - x₁) = (...-...)/(...-...) = .../... = ...
-DD1[2] = ...
-
-DD2[0] = (DD1[1] - DD1[0])/(x₂ - x₀) = (...-...)/(...-...) = .../... = ...
-DD2[1] = (DD1[2] - DD1[1])/(x₃ - x₁) = (...-...)/(...-...) = .../... = ...
-
-DD3[0] = (DD2[1] - DD2[0])/(x₃ - x₀) = (...-...)/(...-...) = .../... = ..."
-
-**IMPORTANT** : Si tu fais une erreur de calcul, MONTRE la correction comme dans le corrigé type :
-"Recalculons Ordre 3 correctement :
-Ordre 2 ligne suivante : (...-...)/(x₃-x₁) = .../... = ...
-Ordre 3 : (...-...)/(x₃ - x₀) = ... / ... = ..."
-
-ÉTAPE 4 : Tableau propre
-"Reprenons le tableau propre :
-
-| x | f(x) | DD1 | DD2 | DD3 |
-|---|---|---|---|---|
-| x₀ | y₀ | | | |
-| | | DD1[0] | | |
-| x₁ | y₁ | | DD2[0] | |
-| | | DD1[1] | | DD3[0] |
-| x₂ | y₂ | | DD2[1] | |
-| | | DD1[2] | | |
-| x₃ | y₃ | | | |"
-
-ÉTAPE 5 : Coefficients du polynôme
-"Coefficients du polynôme (diagonale supérieure) :
-a₀ = y₀ = ...
-a₁ = DD1[0] = ...
-a₂ = DD2[0] = ...
-a₃ = DD3[0] = ...
-
-Polynôme sous forme de Newton :
+xᵢyᵢ = f(xᵢ)Ordre 1 (δ¹)Ordre 2 (δ²)Ordre 3 (δ³)x₀y₀(y₁-y₀)/(x₁-x₀) = ...x₁y₁(δ²₀₁-δ¹₀)/(x₂-x₀) = ...(y₂-y₁)/(x₂-x₁) = ...(δ³-δ²₀)/(x₃-x₀) = ...x₂y₂(δ²₁₂-δ¹₁)/(x₃-x₁) = ...(y₃-y₂)/(x₃-x₂) = ...x₃y₃
+Les coefficients de la diagonale supérieure sont :
+a₀ = y₀, a₁ = δ¹₀, a₂ = δ²₀, a₃ = δ³₀."
+ÉTAPE 4 : Construction du polynôme
+"Construction du polynôme :
 P(x) = a₀ + a₁(x - x₀) + a₂(x - x₀)(x - x₁) + a₃(x - x₀)(x - x₁)(x - x₂)
 P(x) = ... + ...(x - ...) + ...(x - ...)(x - ...) + ...(x - ...)(x - ...)(x - ...)"
+ÉTAPE 5 : Vérification de cohérence
+"Vérification de la cohérence avec le degré trouvé en 1) :
+Le terme de plus haut degré vient de a₃ × x × x × x = a₃ × x³.
+On retrouve bien un degré ... et le coefficient dominant ..."
 
----
 
-STRUCTURE OBLIGATOIRE POUR ERREUR D'INTERPOLATION
+ERREUR D'INTERPOLATION
 
+STRUCTURE OBLIGATOIRE (basée sur le corrigé officiel)
 Question : "Calculer l'erreur d'interpolation aux points x = ... et x = ..."
-
 ÉTAPE 1 : Objectif
-"Objectif : Calculer l'erreur e(x) = |f(x) - P(x)| pour x = ... et x = ..."
-
+"Objectif : Évaluer l'écart E(x) = |f(x) - P(x)| aux points x = ... et x = ..."
 ÉTAPE 2 : Pour CHAQUE point
-"Point A : x = ... = ... (décimal)
-
+"Point x = ... = ... (forme décimale) :
 Valeur exacte :
 f(...) = ... / ... = ... / (...) = ... ≈ ... (4 décimales)
-
-Valeur approchée P(...) avec la forme de Newton :
-Terme 0 : a₀ = ...
-Terme 1 : a₁(x - x₀) = ...(...-...) = ...(...)  = ...
-Terme 2 : a₂(x - x₀)(x - x₁) = ...(...-...)(...-...) = ...(...)(...)  = ...
-Terme 3 : a₃(x - x₀)(x - x₁)(x - x₂) = ...(...-...)(...-...)(...-...) = ...(...)(...)(...) = ...
-
-Somme P(...) = ... + ... + ... + ... = ...
-
+Valeur approchée P(...) (avec la forme de Newton) :
+Termes intermédiaires :
+(x - x₀) = ... - ... = ...
+(x - x₁) = ... - ... = ...
+(x - x₂) = ... - ... = ...
+Calcul :
+P(...) = a₀ + a₁(...) + a₂(...)(...) + a₃(...)(...)(...)
+P(...) = ... + ... + ... + ...
+P(...) = ... = .../... (fraction si possible)
 Erreur absolue :
-e(...) = |f(...) - P(...)| = |... - ...| = |...|
-e(...) = ... (ou mise au même dénominateur : |.../... - .../...| = |.../...|)
-e(...) ≈ ... (4 décimales)"
-
-ÉTAPE 3 : Tableau récapitulatif
+E(...) = |f(...) - P(...)|
+E(...) = |... - ...|
+E(...) = |.../... - .../...|
+E(...) = |(...-.../...|
+E(...) = .../... ≈ ... (4 décimales)"
+ÉTAPE 3 : Tableau récapitulatif (optionnel)
 "Tableau récapitulatif :
+Pointf(x) exacteP(x) approchéeErreur absoluex = ............x = ............
 
-| x | f(x) | P(x) | Erreur Absolue |
-|---|---|---|---|
-| ... | ... | ... | ... |
-| ... | ... | ... | ... |
 
-Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
-
----
-
-STRUCTURE OBLIGATOIRE POUR CONCLUSION
+CONCLUSION SUR L'INTERPOLATION
 
 Question : "Conclure."
+STRUCTURE OBLIGATOIRE :
+"L'erreur d'interpolation n'est pas uniforme sur l'intervalle.
 
-"[Titre de la section] : [Nom de la méthode] donne ici des résultats de qualité [très inégale / satisfaisante / ...].
-
-Analyse des erreurs :
-- Au point x = ..., l'erreur relative est d'environ ...% (.../...). Le point se situe [description de la position].
-- Au point x = ..., l'erreur relative est [énorme/faible], environ ...% (.../...). Le point se situe [description].
-[Si pertinent] De plus, P(...) = ... est [supérieur/inférieur] à P(...) = ..., créant une [bosse artificielle/comportement inattendu] alors que la fonction f(x) = ... est strictement [décroissante/croissante/...].
+Au point x = ... (situé entre x_i=... et x_j=..., intervalle de longueur ...), l'erreur est d'environ ...
+Au point x = ... (situé entre x_i=... et x_j=..., intervalle de longueur ...), l'erreur est de ...
 
 Conclusion :
-[Explication physique/mathématique du comportement observé]
-Pour améliorer le résultat, il faudrait [propositions concrètes]."
+L'erreur d'interpolation augmente significativement lorsque l'espacement entre les nœuds d'interpolation augmente (ici l'espacement passe de ... à ...).
+De plus, la fonction f(x)=... possède une courbure qui varie (...), ce qui rend l'approximation polynomiale difficile sur un large intervalle avec peu de points."
 
----
 
-2. INTÉGRATION NUMÉRIQUE - MÉTHODE DES TRAPÈZES
-
-**IMPORTANT** : Le cours enseigne la MÉTHODE DES TRAPÈZES, PAS Simpson.
-
-Question : "Quelle méthode, vue en cours, utilise-t-on pour approcher le terme ∫[ti, ti+2] f(s, y(s)) ds ?"
-
-RÉPONSE ATTENDUE :
-"La méthode vue en cours pour approcher une intégrale est la MÉTHODE DES TRAPÈZES.
-
-Principe de la méthode des trapèzes :
-Pour approcher ∫[a, b] g(s) ds, on utilise :
-∫[a, b] g(s) ds ≈ (b - a) × [g(a) + g(b)] / 2
-
-Application sur l'intervalle [ti, ti+2] avec h = ti+1 - ti :
-∫[ti, ti+2] f(s, y(s)) ds ≈ (ti+2 - ti) × [f(ti, y(ti)) + f(ti+2, y(ti+2))] / 2
-∫[ti, ti+2] f(s, y(s)) ds ≈ 2h × [f(ti, y(ti)) + f(ti+2, y(ti+2))] / 2
-∫[ti, ti+2] f(s, y(s)) ds ≈ h × [f(ti, y(ti)) + f(ti+2, y(ti+2))]
-
-Cependant, l'exercice demande d'utiliser l'interpolation de Lagrange sur 3 points, ce qui donne la formule de Simpson (h/3 × [f₀ + 4f₁ + f₂]), mais ceci est DÉRIVÉ de l'interpolation, pas une méthode à part enseignée directement."
-
-**SI L'EXERCICE MENTIONNE EXPLICITEMENT "3 POINTS"** :
-"On utilise le polynôme d'interpolation de Lagrange P(s) sur les 3 points {ti, ti+1, ti+2}, puis on intègre ce polynôme pour obtenir l'approximation."
-
----
-
-3. MÉTHODES À PAS MULTIPLES - ADAMS-BASHFORTH
+ADAMS-BASHFORTH
 
 Question : "Écrire la méthode d'Adams-Bashforth à m pas à partir du tableau des coefficients."
+STRUCTURE OBLIGATOIRE (basée sur le corrigé officiel)
+ÉTAPE 1 : Objectif
+"Objectif : Établir la formule explicite de récurrence pour yₙ₊₁ en fonction des valeurs précédentes, en utilisant les coefficients du tableau fourni."
+ÉTAPE 2 : Données
+"Données :
+La méthode est à m pas (m=...), ce qui signifie qu'elle utilise yₙ, fₙ, fₙ₋₁, fₙ₋₂, ... pour calculer yₙ₊₁.
+Le tableau donne les coefficients γₖ liés aux différences finies backward ∇ᵏfₙ :
 
-STRUCTURE OBLIGATOIRE :
+Pour k=0 : γ₀ = ...
+Pour k=1 : γ₁ = ...
+Pour k=2 : γ₂ = ...
+(On s'arrête à k = m-1)."
 
-ÉTAPE 1 : Principe
-"Méthode d'Adams-Bashforth à m pas :
-C'est une méthode EXPLICITE multipas qui utilise les m+1 dernières valeurs calculées pour prédire la suivante.
+ÉTAPE 3 : Formule théorique
+"Formule théorique d'Adams-Bashforth :
+yₙ₊₁ = yₙ + h × Σ (γₖ ∇ᵏfₙ) pour k allant de 0 à m-1"
+ÉTAPE 4 : Développement des différences finies
+"Développement des différences finies ∇ᵏ :
 
-Schéma général :
-wₙ₊₁ = wₙ + h × Σ[k=0 à m] bₖ × f(tₙ₋ₖ, wₙ₋ₖ)
+∇⁰fₙ = fₙ
+∇¹fₙ = fₙ - fₙ₋₁
+∇²fₙ = ∇(fₙ - fₙ₋₁) = (fₙ - fₙ₋₁) - (fₙ₋₁ - fₙ₋₂) = fₙ - 2fₙ₋₁ + fₙ₋₂"
 
-où les coefficients bₖ sont donnés dans le tableau."
-
-ÉTAPE 2 : Lecture du tableau
-"D'après le tableau des coefficients fourni :
-
-| k | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|---|---|---|---|
-| (-1)ᵏ ∫₀¹ Cₖ₋ₛ ds | 1 | 1/2 | 5/12 | 3/8 | 251/720 | 95/288 |
-
-Pour m = 3 (méthode à 3 pas), on utilise les coefficients k = 0, 1, 2, 3."
-
-ÉTAPE 3 : Écriture du schéma
-"Schéma d'Adams-Bashforth à 3 pas (m=3) :
-
-wₙ₊₁ = wₙ + h × [b₀ × f(tₙ, wₙ) + b₁ × f(tₙ₋₁, wₙ₋₁) + b₂ × f(tₙ₋₂, wₙ₋₂) + b₃ × f(tₙ₋₃, wₙ₋₃)]
-
-Avec les coefficients du tableau (formule d'Adams-Bashforth) :
-b₀ = 55/24 (coefficient pour fₙ)
-b₁ = -59/24 (coefficient pour fₙ₋₁)
-b₂ = 37/24 (coefficient pour fₙ₋₂)
-b₃ = -9/24 (coefficient pour fₙ₋₃)
-
-IMPORTANT : Ces coefficients sont dérivés du tableau par la formule spécifique d'Adams-Bashforth. Si le tableau donne directement les coefficients bₖ, les utiliser directement."
-
-ÉTAPE 4 : Ordre de la méthode
+ÉTAPE 5 : Calculs détaillés des coefficients
+"Calculs détaillés des coefficients :
+Substituons dans la formule :
+yₙ₊₁ = yₙ + h × [ γ₀×fₙ + γ₁×(fₙ - fₙ₋₁) + γ₂×(fₙ - 2fₙ₋₁ + fₙ₋₂) ]
+Factorisons par fₙ, fₙ₋₁, fₙ₋₂ :
+Coefficient de fₙ :
+γ₀ + γ₁ + γ₂ = ... + ... + ... = ...
+Coefficient de fₙ₋₁ :
+-γ₁ - 2γ₂ = ... - 2×... = ...
+Coefficient de fₙ₋₂ :
+γ₂ = ..."
+ÉTAPE 6 : Schéma numérique final
+"Schéma numérique final :
+yₙ₊₁ = yₙ + (h/...) × [ ...f(tₙ, yₙ) + ...f(tₙ₋₁, yₙ₋₁) + ...f(tₙ₋₂, yₙ₋₂) ]"
+ÉTAPE 7 : Ordre de la méthode
 "Ordre de la méthode :
-La méthode d'Adams-Bashforth à m pas est d'ordre m+1.
+Une méthode d'Adams-Bashforth à m pas est d'ordre m.
+Ici m=..., donc la méthode est d'ordre ..."
 
-Pour m = 3 : ordre = 3 + 1 = 4
 
-L'erreur de troncature locale est en O(h⁵)."
+CALCUL DE L'ORDRE DE PRÉCISION
 
----
-
-4. CALCUL DE L'ORDRE DE PRÉCISION
-
-Question : "Calculer l'ordre de précision à l'aide de la relation e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds"
-
-STRUCTURE OBLIGATOIRE :
-
-ÉTAPE 1 : Identification
-"Relation donnée :
-e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
-
-où :
-- m = 3 (nombre de pas)
-- ξᵢ ∈ [intervalle à déterminer]
-- f^(m)(ξᵢ, y(ξᵢ)) = dérivée m-ième de f"
-
-ÉTAPE 2 : Simplification
-"Simplification de l'expression :
-e(h) = (1/h) × h^(m+1) × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
+Question : "Calculer l'ordre de précision à l'aide de la relation donnée."
+STRUCTURE SIMPLIFIÉE :
+"Relation donnée : [écrire la relation]
+Simplification :
 e(h) = h^m × f^(m)(ξᵢ, y(ξᵢ)) × (-1)^m × ∫₀¹ Cₘ₋ₛ ds
+Avec m = ... :
+e(h) = h^... × ...
+D'après le tableau, pour k = ... :
+(-1)^k × ∫₀¹ Cₖ₋ₛ ds = ...
+L'erreur est en O(h^...), donc l'erreur de troncature locale est d'ordre ..."
 
-Avec m = 3 :
-e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-1)³ × ∫₀¹ C₃₋ₛ ds
-e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-1) × ∫₀¹ C₃₋ₛ ds"
 
-ÉTAPE 3 : Lecture du coefficient
-"Lecture dans le tableau :
-Pour k = 3 :
-(-1)³ × ∫₀¹ C₃₋ₛ ds = 3/8 (d'après le tableau)
+INTÉGRATION NUMÉRIQUE
 
-Donc :
-∫₀¹ C₃₋ₛ ds = -3/8"
+Question : "Quelle méthode, vue en cours, utilise-t-on pour approcher le terme ∫[ti, ti+2] f(s, y(s)) ds ?"
+RÉPONSE BASÉE SUR LE CORRIGÉ OFFICIEL :
+"L'énoncé propose d'approcher l'intégrale par (h/3)(fᵢ₊₂ + 4fᵢ₊₁ + fᵢ).
+Il s'agit de la Méthode de Simpson (règle de quadrature de Newton-Cotes fermée d'ordre 4 sur 2 intervalles)."
+NOTE IMPORTANTE : Le corrigé officiel accepte Simpson comme réponse correcte, donc cette méthode EST vue en cours (dérivée de l'interpolation de Lagrange).
 
-ÉTAPE 4 : Conclusion sur l'ordre
-"Expression finale de l'erreur :
-e(h) = h³ × f^(3)(ξᵢ, y(ξᵢ)) × (-3/8)
-e(h) = - (3/8) × h³ × f^(3)(ξᵢ, y(ξᵢ))
 
-L'erreur est en O(h³), donc l'erreur de troncature locale est d'ordre 3.
+POLYNÔME D'INTERPOLATION DE LAGRANGE SUR 3 POINTS
 
-Cependant, pour Adams-Bashforth à m pas, l'ordre de la méthode est m+1 = 4.
-Ceci concerne l'erreur globale après accumulation."
-
----
-
-5. MÉTHODES PRÉDICTEUR-CORRECTEUR
-
-Question : "Écrire le schéma Prédicteur-Correcteur."
-
+Question : "Écrire le polynôme d'interpolation de Lagrange P(s) associé aux 3 points {(ti, fi), (ti+1, fi+1), (ti+2, fi+2)}."
 STRUCTURE OBLIGATOIRE :
+"Les 3 points sont : (ti, fi), (ti+1, fi+1), (ti+2, fi+2)
+où fi = f(ti, y(ti)), etc.
+Avec h = ti+1 - ti (pas constant), on a :
 
-ÉTAPE 1 : Principe
-"Principe d'une méthode Prédicteur-Correcteur :
-1. PRÉDICTEUR (explicite) : estimer wₙ₊₁ avec une première approximation
-2. CORRECTEUR (implicite) : affiner wₙ₊₁ en utilisant la prédiction"
+ti+1 = ti + h
+ti+2 = ti + 2h
 
-ÉTAPE 2 : Schéma Prédicteur (Euler par exemple)
-"Schéma Prédicteur - Méthode d'Euler explicite :
+Formule de Lagrange :
+P(s) = fi × Li(s) + fi+1 × Li+1(s) + fi+2 × Li+2(s)
+où :
+Li(s) = [(s - ti+1)(s - ti+2)] / [(ti - ti+1)(ti - ti+2)]
+= [(s - ti+1)(s - ti+2)] / [(-h)(-2h)]
+= [(s - ti+1)(s - ti+2)] / (2h²)
+Li+1(s) = [(s - ti)(s - ti+2)] / [(ti+1 - ti)(ti+1 - ti+2)]
+= [(s - ti)(s - ti+2)] / [(h)(-h)]
+= -[(s - ti)(s - ti+2)] / h²
+Li+2(s) = [(s - ti)(s - ti+1)] / [(ti+2 - ti)(ti+2 - ti+1)]
+= [(s - ti)(s - ti+1)] / [(2h)(h)]
+= [(s - ti)(s - ti+1)] / (2h²)
+Polynôme complet :
+P(s) = fi × [(s-ti+1)(s-ti+2)]/(2h²) - fi+1 × [(s-ti)(s-ti+2)]/h² + fi+2 × [(s-ti)(s-ti+1)]/(2h²)"
 
-Pour prédire wₙ₊₂ à partir de wₙ et wₙ₊₁ :
-w*ₙ₊₂ = wₙ + 2h × f(tₙ₊₁, wₙ₊₁)
 
-Explication :
-- On utilise un pas double (de tₙ à tₙ₊₂)
-- On évalue f au point intermédiaire (tₙ₊₁, wₙ₊₁)
-- w*ₙ₊₂ est la valeur prédite"
+PRÉDICTEUR-CORRECTEUR
 
-ÉTAPE 3 : Schéma Correcteur
-"Schéma Correcteur - [Méthode donnée dans l'exercice] :
+Question : "Écrire le schéma Prédicteur (Euler) pour prédire wi+2."
+STRUCTURE BASÉE SUR LE CORRIGÉ OFFICIEL :
+ÉTAPE 1 : Objectif
+"Objectif : Adapter la méthode d'Euler pour prédire la valeur wᵢ₊₂ nécessaire au schéma implicite."
+ÉTAPE 2 : Analyse
+"Analyse :
+Le schéma correcteur relie wᵢ₊₂ à wᵢ et aux dérivées en i, i+1, i+2. Il est implicite car wᵢ₊₂ apparaît dans f(tᵢ₊₂, wᵢ₊₂).
+Pour estimer wᵢ₊₂, nous utilisons une méthode explicite.
+Nous sommes à l'étape où wᵢ et wᵢ₊₁ sont connus.
+La méthode d'Euler standard partant de tᵢ₊₁ permet d'atteindre tᵢ₊₂."
+ÉTAPE 3 : Formule du Prédicteur
+"Formule du Prédicteur (Euler à partir de i+1) :
+wᵢ₊₂⁽ᴾ⁾ = wᵢ₊₁ + h × f(tᵢ₊₁, wᵢ₊₁)
+Note : On utilise le point le plus proche (i+1) pour la précision."
 
-wₙ₊₂ = wₙ + (h/3) × [f(tₙ₊₂, w*ₙ₊₂) + 4f(tₙ₊₁, wₙ₊₁) + f(tₙ, wₙ)]
+Question : "Écrire l'algorithme Prédicteur-Correcteur."
+STRUCTURE BASÉE SUR LE CORRIGÉ OFFICIEL :
+"Algorithme :
+Pour chaque étape i allant de 0 à N-2 :
 
-Explication :
-- On utilise la prédiction w*ₙ₊₂ dans f(tₙ₊₂, w*ₙ₊₂)
-- Ceci rend le schéma explicite (calculable)
-- C'est une formule d'intégration à 3 points"
+Prédiction (P) :
+Calculer une valeur provisoire de wᵢ₊₂
+wᵢ₊₂* = wᵢ₊₁ + h × f(tᵢ₊₁, wᵢ₊₁)
+Évaluation (E) :
+Évaluer la fonction f avec cette prédiction
+fᵢ₊₂* = f(tᵢ₊₂, wᵢ₊₂*)
+Correction (C) :
+Appliquer la formule de Simpson
+wᵢ₊₂ = wᵢ + (h/3) × [fᵢ₊₂* + 4f(tᵢ₊₁, wᵢ₊₁) + f(tᵢ, wᵢ)]
 
-ÉTAPE 4 : Algorithme complet
-"Algorithme Prédicteur-Correcteur :
+Initialisation :
+Le schéma nécessite w₀ (donné, α) et w₁ (donné, β)."
 
-INITIALISATION :
-- w₀ = α (condition initiale)
-- w₁ = β (calculé par une autre méthode, ex: Euler ou Taylor)
-
-ITÉRATION (pour i = 0, 1, 2, ..., N-2) :
-1. PRÉDICTEUR :
-   w*ᵢ₊₂ = wᵢ + 2h × f(tᵢ₊₁, wᵢ₊₁)
-
-2. CORRECTEUR :
-   wᵢ₊₂ = wᵢ + (h/3) × [f(tᵢ₊₂, w*ᵢ₊₂) + 4f(tᵢ₊₁, wᵢ₊₁) + f(tᵢ, wᵢ)]
-
-3. Incrémenter : i ← i + 1
-
-FIN ITÉRATION"
-
-ÉTAPE 5 : Analyse du choix
-"Question : Le choix d'Euler comme Prédicteur est-il bon ?
-
+Question : "Le choix d'Euler comme Prédicteur est-il bon ?"
+STRUCTURE BASÉE SUR LE CORRIGÉ OFFICIEL :
+"Question : Le schéma correcteur (Simpson) est d'ordre 4. L'utilisation d'Euler (ordre 1) comme prédicteur est-elle un bon choix ?
 Analyse :
-- Correcteur d'ordre 4 (donné dans l'énoncé)
-- Prédicteur Euler d'ordre 1
+Le théorème sur l'ordre des méthodes Prédicteur-Correcteur stipule que si le correcteur est d'ordre q et le prédicteur d'ordre p, l'ordre global de la méthode (en mode PEC ou PECE sans itération jusqu'à convergence) est min(q, p+1).
+Application aux données :
 
-L'ordre global de la méthode Prédicteur-Correcteur est limité par le PLUS FAIBLE des deux, donc ordre 1.
+Correcteur (Simpson) : Ordre q = 4
+Prédicteur (Euler) : Ordre p = 1
 
+Ordre résultant = min(4, p+1) = min(4, 1+1) = 2.
 Conclusion :
-NON, le choix d'Euler (ordre 1) n'est pas optimal pour un Correcteur d'ordre 4.
+Non, la méthode d'Euler n'est pas un bon choix car elle dégrade l'ordre global de la méthode à 2, nous faisant perdre la précision d'ordre 4 offerte par Simpson.
+Pour conserver l'ordre 4, il faudrait choisir un prédicteur tel que p + 1 ≥ 4, c'est-à-dire p ≥ 3.
+Un meilleur choix serait un prédicteur d'ordre 3 ou 4, comme par exemple la méthode d'Adams-Bashforth à 3 ou 4 pas, ou le prédicteur de Milne (ordre 4)."
 
-Meilleur choix :
-Il faudrait utiliser un Prédicteur d'ordre au moins 4, par exemple :
-- Runge-Kutta d'ordre 4 (RK4)
-- Adams-Bashforth d'ordre 4
-- Taylor d'ordre 4
 
-Ainsi, l'ordre global serait 4."
+MÉTHODES EDO (Euler, Taylor, RK)
 
----
+[Conserver les sections précédentes sur Euler, Taylor, RK4 telles quelles]
 
-6. MÉTHODES NUMÉRIQUES POUR EDO
-
-TABLEAUX OBLIGATOIRES POUR TOUTE MÉTHODE ITÉRATIVE
-
-Pour TOUTE méthode (Euler, Taylor, RK), créer ce tableau :
-
-| n | tₙ | [Colonnes intermédiaires] | wₙ | y(tₙ) exact | Erreur |y-w| |
-|---|---|---|---|---|---|
-
-A) MÉTHODE D'EULER
-
-Formule :
-tₙ = t₀ + n × h
-w₀ = y₀
-wₙ₊₁ = wₙ + h × f(tₙ, wₙ)
-
-Tableau :
-| n | tₙ | f(tₙ, wₙ) | wₙ₊₁ = wₙ + h×f | y(tₙ) | Erreur |
-|---|---|---|---|---|---|
-
-Ordre : O(h)
-
----
-
-B) MÉTHODE DE TAYLOR D'ORDRE 2
-
-Calcul préalable des dérivées partielles :
-fₜ = ∂f/∂t = ... (montrer le calcul)
-fᵧ = ∂f/∂y = ... (montrer le calcul)
-
-Formule :
-wₙ₊₁ = wₙ + h × f(tₙ, wₙ) + (h²/2) × [fₜ(tₙ, wₙ) + fᵧ(tₙ, wₙ) × f(tₙ, wₙ)]
-
-Tableau :
-| n | tₙ | f | fₜ | fᵧ | fₜ + fᵧ×f | wₙ₊₁ | y(tₙ) | Erreur |
-|---|---|---|---|---|---|---|---|---|
-
-Ordre : O(h²)
-
----
-
-C) RUNGE-KUTTA D'ORDRE 2 (Heun)
-
-Formule :
-k₁ = h × f(tₙ, wₙ)
-k₂ = h × f(tₙ + h, wₙ + k₁)
-wₙ₊₁ = wₙ + (k₁ + k₂)/2
-
-Tableau :
-| n | tₙ | k₁ | k₂ | wₙ₊₁ | y(tₙ) | Erreur |
-|---|---|---|---|---|---|---|
-
-Ordre : O(h²)
-
----
-
-D) RUNGE-KUTTA D'ORDRE 4 (RK4)
-
-Formule :
-k₁ = h × f(tₙ, wₙ)
-k₂ = h × f(tₙ + h/2, wₙ + k₁/2)
-k₃ = h × f(tₙ + h/2, wₙ + k₂/2)
-k₄ = h × f(tₙ + h, wₙ + k₃)
-wₙ₊₁ = wₙ + (k₁ + 2k₂ + 2k₃ + k₄)/6
-
-Tableau :
-| n | tₙ | k₁ | k₂ | k₃ | k₄ | wₙ₊₁ | y(tₙ) | Erreur |
-|---|---|---|---|---|---|---|---|---|
-
-Ordre : O(h⁴)
-
----
-
-DÉTAIL DES ITÉRATIONS OBLIGATOIRE
-
-APRÈS le tableau, détailler 2-3 itérations ligne par ligne :
-
-"Détail des premières itérations :
-
-Itération n=0 :
-- Donnée : t₀ = ..., w₀ = ... (condition initiale)
-- Calcul de f(t₀, w₀) :
-  f(t₀, w₀) = ... (substituer t₀ et w₀ dans f)
-  f(..., ...) = ...
-  f(t₀, w₀) = ...
-- Calcul de wₙ₊₁ :
-  w₁ = w₀ + h × f(t₀, w₀)
-  w₁ = ... + ... × ...
-  w₁ = ... + ...
-  w₁ = ...
-
-Itération n=1 :
-- t₁ = t₀ + h = ... + ... = ...
-- Calcul de f(t₁, w₁) :
-  f(t₁, w₁) = ... (substituer)
-  f(..., ...) = ...
-  f(t₁, w₁) = ...
-- w₂ = w₁ + h × f(t₁, w₁) = ... + ... × ... = ...
-
-Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
-
----
+PHRASE FINALE OBLIGATOIRE
+À la fin de chaque exercice :
+"Tous les calculs intermédiaires ont été montrés ci-dessus pour assurer la reproductibilité."
 
 ERREURS FRÉQUENTES À ÉVITER
 
-- Ne pas créer de tableau pour les itérations
-- Utiliser Simpson
-- Inventer des méthodes non enseignées dans le cours
-- Oublier les dérivées partielles pour Taylor
-- Ne pas montrer les calculs intermédiaires de k₁, k₂, k₃, k₄
-- Oublier la vérification de la solution exacte
-- Ne pas calculer les erreurs |y(tₙ) - wₙ|
-- Utiliser du LaTeX ou des * (interdit)
-- Ne pas suivre la structure Objectif → Données → Formule → Calculs
+Ne PAS donner le polynôme P(x) sous forme développée avec coefficients numériques
+Utiliser la formule incorrecte pour l'ordre global : c'est min(q, p+1), PAS min(p, q)
+Prédicteur Euler avec pas double au lieu de pas simple depuis i+1
+Ne pas vérifier la cohérence entre Newton et Lagrange
+Utiliser du LaTeX ou des * (interdit)
